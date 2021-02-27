@@ -1,10 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using Unity.Entities;
-using UnityEngine;
 
-[GenerateAuthoringComponent]
-public struct PlayerTagComponent : IComponentData
+namespace _Project.Scripts.Components
 {
+    [GenerateAuthoringComponent]
+    public struct PlayerTagComponent : IComponentData
+    {
     
+    }
 }

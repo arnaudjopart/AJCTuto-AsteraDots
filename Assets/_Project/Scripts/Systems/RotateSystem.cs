@@ -14,8 +14,12 @@ public class RotateSystem : SystemBase
     protected override void OnUpdate()
     {
         
-        Entities.ForEach((ref PhysicsVelocity _velocity, ref PhysicsMass _physicsMass, ref MoveComponentData _moveComponentData, 
-            ref MovementParametersComponent _movementParameters, ref Rotation _rotation) =>
+        Entities.ForEach((
+            ref PhysicsVelocity _velocity, 
+            ref PhysicsMass _physicsMass, 
+            ref MovementParametersComponentData _moveComponentData, 
+            ref MovementInfoComponent _movementParameters, 
+            ref Rotation _rotation) =>
         {
             // ReSharper disable once InvokeAsExtensionMethod
             PhysicsComponentExtensions.ApplyAngularImpulse(

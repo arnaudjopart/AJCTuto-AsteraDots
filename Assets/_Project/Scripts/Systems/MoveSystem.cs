@@ -1,20 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Physics;
 using Unity.Physics.Extensions;
 using Unity.Transforms;
-using UnityEngine;
 
 public class MoveSystem : SystemBase
 {
    
     protected override void OnUpdate()
     {
-        Entities.ForEach((ref MovementParametersComponent _movementParametersComponent, 
-            ref MoveComponentData _moveComponentData,  ref PhysicsVelocity _velocity, ref Rotation _rotation, ref PhysicsMass _physicsMass) =>
+        Entities.ForEach((
+            ref MovementInfoComponent _movementParametersComponent, 
+            ref MovementParametersComponentData _moveComponentData,  
+            ref PhysicsVelocity _velocity, 
+            ref Rotation _rotation, 
+            ref PhysicsMass _physicsMass) =>
         {
             PhysicsComponentExtensions.ApplyLinearImpulse(
                 ref _velocity, 

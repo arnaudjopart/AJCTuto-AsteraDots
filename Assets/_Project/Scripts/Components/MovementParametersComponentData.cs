@@ -2,7 +2,7 @@ using Unity.Entities;
 using Unity.Mathematics;
 
 [GenerateAuthoringComponent]
-public struct MoveComponentData : IComponentData
+public struct MovementParametersComponentData : IComponentData
 {
     public float m_linearSpeed;
     public float m_maxLinearVelocity;

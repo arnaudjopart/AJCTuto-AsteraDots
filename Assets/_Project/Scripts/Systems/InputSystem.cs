@@ -9,9 +9,9 @@ namespace _Project.Scripts.Systems
         {
             Entities.ForEach((ref InputDataComponent _input) =>
             {
-                _input.m_inputLeft = Input.GetKey(KeyCode.Q)?1:0;
-                _input.m_inputRight = Input.GetKey(KeyCode.D)?1:0;
-                _input.m_inputForward = Input.GetKey(KeyCode.Z)?1:0;
+                _input.m_inputLeft = Input.GetKey(KeyCode.Q);
+                _input.m_inputRight = Input.GetKey(KeyCode.D);
+                _input.m_inputForward = Input.GetKey(KeyCode.Z);
                 
             }).Run();
         }
