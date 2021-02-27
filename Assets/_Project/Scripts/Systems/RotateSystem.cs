@@ -1,44 +1,33 @@
-using System.Collections;
-using System.Collections.Generic;
 using _Project.Scripts.Components;
-using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Physics;
 using Unity.Physics.Extensions;
 using Unity.Transforms;
-using UnityEngine;
 
-public class RotateSystem : SystemBase
+namespace _Project.Scripts.Systems
 {
-    
-    protected override void OnUpdate()
+    public class RotateSystem : SystemBase
     {
-        
-        Entities.ForEach((
-            ref PhysicsVelocity _velocity, 
-            ref PhysicsMass _physicsMass, 
-            ref MovementParametersComponentData _moveComponentData, 
-            ref MovementInfoComponent _movementParameters, 
-            ref Rotation _rotation) =>
+        protected override void OnUpdate()
         {
-            // ReSharper disable once InvokeAsExtensionMethod
-            PhysicsComponentExtensions.ApplyAngularImpulse(
-                ref _velocity,
-                _physicsMass,
-                new float3(0,0,_movementParameters.m_angularImpulse * _moveComponentData.m_physicsAngularImpulse));
-
-            var currentAngularSpeed = PhysicsComponentExtensions.GetAngularVelocityWorldSpace(in _velocity, in _physicsMass, in _rotation);
-            
-            if(math.length(currentAngularSpeed)>_moveComponentData.m_maxAngularVelocity)
+            Entities.ForEach((
+                ref PhysicsVelocity _velocity, ref MovementInfoComponent _movementParameters,
+                ref Rotation _rotation, in MovementParametersComponentData _moveComponentData, in PhysicsMass _physicsMass) =>
             {
-                PhysicsComponentExtensions.SetAngularVelocityWorldSpace(
-                    ref _velocity, 
-                    _physicsMass, 
-                    _rotation,
-                    math.normalize(currentAngularSpeed)* _moveComponentData.m_maxAngularVelocity );
-            }
+                PhysicsComponentExtensions.ApplyAngularImpulse(
+                    ref _velocity, _physicsMass,
+                    new float3(0,0,_movementParameters.m_angularImpulse * _moveComponentData.m_physicsAngularImpulse));
+
+                var currentAngularSpeed = PhysicsComponentExtensions.GetAngularVelocityWorldSpace(in _velocity, in _physicsMass, in _rotation);
             
-        }).Schedule();
+                if(math.length(currentAngularSpeed)>_moveComponentData.m_maxAngularVelocity)
+                {
+                    PhysicsComponentExtensions.SetAngularVelocityWorldSpace(ref _velocity, _physicsMass, _rotation,
+                        math.normalize(currentAngularSpeed)* _moveComponentData.m_maxAngularVelocity );
+                }
+            
+            }).Schedule();
+        }
     }
 }

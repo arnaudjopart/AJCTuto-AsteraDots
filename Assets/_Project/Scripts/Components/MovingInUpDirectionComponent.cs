@@ -1,6 +1,9 @@
 using Unity.Entities;
 
-[GenerateAuthoringComponent]
-public struct MovingInUpDirectionComponent : IComponentData
+namespace _Project.Scripts.Components
 {
+    [GenerateAuthoringComponent]
+    public struct MovingInUpDirectionComponent : IComponentData
+    {
+    }
 }

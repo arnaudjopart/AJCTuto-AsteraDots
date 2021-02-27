@@ -11,7 +11,7 @@ namespace _Project.Scripts.Systems
         {
             Entities.WithAll<MovingInUpDirectionComponent>().ForEach((
                 ref MovementInfoComponent _movementParametersComponent, 
-                ref Rotation _rotation) =>
+                in Rotation _rotation) =>
             {
                 var direction = math.mul(_rotation.Value, math.up());
                 _movementParametersComponent.m_directionOfMove = direction;
