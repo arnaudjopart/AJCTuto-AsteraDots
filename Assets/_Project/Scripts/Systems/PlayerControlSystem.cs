@@ -3,12 +3,10 @@ using _Project.Scripts.Components;
 using Unity.Collections;
 using Unity.Entities;
 
-
 namespace _Project.Scripts.Systems
 {
     public class PlayerControlSystem : SystemBase
     {
-
         protected override void OnUpdate()
         {
             var query = GetEntityQuery(typeof(InputComponentData));
@@ -27,6 +25,7 @@ namespace _Project.Scripts.Systems
                 _movementInfoComponent.m_linearImpulse = inputData.m_inputForward?1:0;
 
             }).ScheduleParallel();
+            
             array.Dispose();
         }
     }
