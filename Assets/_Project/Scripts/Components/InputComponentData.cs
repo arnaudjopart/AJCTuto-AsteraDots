@@ -1,7 +1,7 @@
 
 using Unity.Entities;
 
-public struct InputDataComponent : IComponentData
+public struct InputComponentData : IComponentData
 {
     public bool m_inputLeft;
     public bool m_inputRight;

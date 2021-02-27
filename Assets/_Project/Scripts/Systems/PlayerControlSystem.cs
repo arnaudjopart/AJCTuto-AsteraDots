@@ -11,8 +11,8 @@ namespace _Project.Scripts.Systems
 
         protected override void OnUpdate()
         {
-            var query = GetEntityQuery(typeof(InputDataComponent));
-            var array = query.ToComponentDataArray<InputDataComponent>(Allocator.TempJob);
+            var query = GetEntityQuery(typeof(InputComponentData));
+            var array = query.ToComponentDataArray<InputComponentData>(Allocator.TempJob);
 
             var inputData = array[0];
             

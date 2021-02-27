@@ -18,7 +18,7 @@ namespace _Project.Scripts.Mono
         void Start()
         { 
             
-            m_entityManager.CreateEntity(typeof(InputDataComponent));
+            m_entityManager.CreateEntity(typeof(InputComponentData));
         
         }
     }
