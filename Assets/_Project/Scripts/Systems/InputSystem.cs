@@ -33,7 +33,6 @@ namespace _Project.Scripts.Systems
             
             Entities.ForEach((ref InputComponentData _input) =>
             {
-                
                 _input.m_inputLeft = vector.x<0;
                 _input.m_inputRight = vector.x>0;
                 _input.m_inputForward = vector.y>0;
