@@ -30,8 +30,8 @@ namespace _Project.Scripts.Systems
         
         }
     }
-    
-    
+
+
     public class DestroyAfterSecondsSystem : SystemBase
     {
         private EntityManager m_entityManager;

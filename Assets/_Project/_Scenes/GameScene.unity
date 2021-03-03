@@ -532,6 +532,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_prefabFX: {fileID: 2087221813439417403, guid: 8734cb0978b30634ba82a32605c67cc8, type: 3}
+  m_prefabShipTrail: {fileID: 4869009398989350600, guid: 1a19ab29ffeb4b0468553fe51e2d1132, type: 3}
 --- !u!4 &1728088294
 Transform:
   m_ObjectHideFlags: 0
@@ -720,6 +721,10 @@ PrefabInstance:
     - target: {fileID: 4869009398989350600, guid: 1a19ab29ffeb4b0468553fe51e2d1132, type: 3}
       propertyPath: m_Name
       value: ShipTrail
+      objectReference: {fileID: 0}
+    - target: {fileID: 4869009398989350600, guid: 1a19ab29ffeb4b0468553fe51e2d1132, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4869009398989350601, guid: 1a19ab29ffeb4b0468553fe51e2d1132, type: 3}
       propertyPath: m_RootOrder
