@@ -1,26 +1,16 @@
 using Unity.Collections;
-using Unity.Entities;
 using Unity.Jobs;
 using Unity.Mathematics;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
 namespace _Project.Scripts.Mono
 {
     public class BootStrap : MonoBehaviour
     {
-        private EntityManager m_entityManager;
         public MeshFilter m_renderer;
 
         public GameObject edgePrefab;
-
-        private void Awake()
-        {
-            
-            m_entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
-            
-        }
-
+        
 
         void Start()
         {
@@ -48,7 +38,6 @@ namespace _Project.Scripts.Mono
                 index++;
             }
             
-            m_entityManager.CreateEntity(typeof(InputComponentData));
             
             var job = new SomeJob
             {
