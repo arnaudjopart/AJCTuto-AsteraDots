@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 919132147566224643}
   - component: {fileID: 919132147566224644}
   - component: {fileID: 8274987084429281251}
+  - component: {fileID: 764865811}
   m_Layer: 6
   m_Name: ship
   m_TagString: Untagged
@@ -210,7 +211,7 @@ MonoBehaviour:
   m_MotionType: 0
   m_Smoothing: 0
   m_Mass: 1
-  m_LinearDamping: 0.5
+  m_LinearDamping: 1
   m_AngularDamping: 5
   m_InitialLinearVelocity:
     x: 0
@@ -323,6 +324,19 @@ MonoBehaviour:
   m_isFiring: 0
   m_fireRate: 0.1
   m_timer: 0
+--- !u!114 &764865811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4554040538728486992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90d2077b588251b4a9ed4bcb4e0f4a1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_mesh: {fileID: 0}
 --- !u!1 &4809554532847624329
 GameObject:
   m_ObjectHideFlags: 0
