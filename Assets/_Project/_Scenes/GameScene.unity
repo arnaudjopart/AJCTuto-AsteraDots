@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.4418677, g: 0.48361886, b: 0.5320007, a: 1}
+  m_IndirectSpecularColor: {r: 0.44186738, g: 0.4836185, b: 0.53199995, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -616,9 +616,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c176442e7084f81b38261c3ef051505, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_physicsLinearImpulse: 0.5
+  m_linearVelocity: 0.5
   m_maxLinearVelocity: 20
-  m_physicsAngularImpulse: 0.5
+  m_angularVelocity: 0.5
   m_maxAngularVelocity: 5
 --- !u!114 &919132147566224641
 MonoBehaviour:
@@ -664,8 +664,12 @@ MonoBehaviour:
     x: 0
     y: 0
     z: 0
+  m_angularVector:
+    x: 0
+    y: 0
+    z: 0
   m_angularImpulse: 0
-  m_linearImpulse: 0
+  m_linearImpulseCommand: 0
 --- !u!1001 &3743153661794090156
 PrefabInstance:
   m_ObjectHideFlags: 0

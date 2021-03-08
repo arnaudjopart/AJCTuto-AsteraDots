@@ -2,6 +2,7 @@
 using _Project.Scripts.Components;
 using Unity.Collections;
 using Unity.Entities;
+using Unity.Mathematics;
 
 namespace _Project.Scripts.Systems
 {
@@ -14,15 +15,15 @@ namespace _Project.Scripts.Systems
 
             var inputData = array[0];
             
-            Entities.WithAll<PlayerTagComponent>().ForEach((ref MovementInfoComponent _movementInfoComponent) =>
+            Entities.WithAll<PlayerTagComponent>().ForEach((ref MovementCommandsComponentData _movementInfoComponent) =>
             {
                 var turningLeft = inputData.m_inputLeft ? 1 : 0;
                 var turningRight = inputData.m_inputRight ? 1 : 0;
                 
                 var rotationDirection = turningLeft - turningRight;
                 
-                _movementInfoComponent.m_angularImpulse = rotationDirection;
-                _movementInfoComponent.m_linearImpulse = inputData.m_inputForward?1:0;
+                _movementInfoComponent.m_angularVector = new float3( 0,0,rotationDirection);
+                _movementInfoComponent.m_linearImpulseCommand = inputData.m_inputForward?1:0;
 
             }).ScheduleParallel();
             
