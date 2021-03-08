@@ -10,9 +10,9 @@ public class OffScreenDetectionSystem : SystemBase
     {
         var screenData = GetSingleton<ScreenDataComponent>();
 
-        Entities.WithAll<OffScreenWrapperComponent>().WithAll<MovementInfoComponent>().ForEach(
+        Entities.WithAll<OffScreenWrapperComponent>().WithAll<MovementCommandsComponentData>().ForEach(
             (Entity _entity, ref OffScreenWrapperComponent _offScreen,
-                ref MovementInfoComponent _moveComponent, ref Translation _translation) =>
+                ref MovementCommandsComponentData _moveComponent, ref Translation _translation) =>
             {
                 var previousPosition = _moveComponent.m_previousPosition;
                 var currentPosition = _translation.Value;
