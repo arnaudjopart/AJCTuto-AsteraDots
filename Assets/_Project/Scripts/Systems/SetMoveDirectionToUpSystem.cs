@@ -10,7 +10,7 @@ namespace _Project.Scripts.Systems
         protected override void OnUpdate()
         {
             Entities.WithAll<MovingInUpDirectionComponent>().ForEach((
-                ref MovementInfoComponent _movementParametersComponent, 
+                ref MovementCommandsComponentData _movementParametersComponent, 
                 in Rotation _rotation) =>
             {
                 var direction = math.mul(_rotation.Value, math.up());

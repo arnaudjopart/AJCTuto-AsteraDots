@@ -43,9 +43,9 @@ namespace _Project.Scripts.Systems
                             Value = _rotation.Value
                         });
 
-                        ecb.SetComponent(entityInQueryIndex , newProjectile, new MovementInfoComponent()
+                        ecb.SetComponent(entityInQueryIndex , newProjectile, new MovementCommandsComponentData()
                         {
-                            m_linearImpulse = 1,
+                            m_linearImpulseCommand = 1,
                         });
                         
                         ecb.SetComponent(entityInQueryIndex , newProjectile, new AutoDestroyAfterSeconds()
