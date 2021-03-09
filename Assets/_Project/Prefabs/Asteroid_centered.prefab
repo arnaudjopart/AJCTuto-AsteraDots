@@ -14,8 +14,12 @@ GameObject:
   - component: {fileID: 1290769901207293824}
   - component: {fileID: 1290769901207293854}
   - component: {fileID: 2419419968853794275}
+  - component: {fileID: -6122081054514893335}
+  - component: {fileID: -1946460876647261352}
+  - component: {fileID: 7558687672449279413}
+  - component: {fileID: 271216578197507260}
   m_Layer: 0
-  m_Name: Asteroid 1
+  m_Name: Asteroid_centered
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -67,13 +71,14 @@ MonoBehaviour:
     z: 0
   m_directionOfMove:
     x: 0
+    y: 1
+    z: 0
+  m_angularVector:
+    x: 0
     y: 0
     z: 0
-  m_angularImpulse:
-    x: 0
-    y: 1
-    z: 1
-  m_linearImpulse: 1
+  m_angularImpulse: 0
+  m_linearImpulseCommand: 1
 --- !u!114 &1290769901207293824
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -86,9 +91,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c176442e7084f81b38261c3ef051505, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_physicsLinearImpulse: 1
+  m_linearVelocity: 0.2
   m_maxLinearVelocity: 2
-  m_physicsAngularImpulse: 1
+  m_angularVelocity: 0
   m_maxAngularVelocity: 0.8
 --- !u!114 &1290769901207293854
 MonoBehaviour:
@@ -189,7 +194,7 @@ MonoBehaviour:
     m_Template: {fileID: 0}
     m_CollisionResponse:
       m_Override: 0
-      m_Value: 0
+      m_Value: 3
     m_Friction:
       m_Override: 0
       m_Value:
@@ -283,6 +288,57 @@ MonoBehaviour:
         Tag07: 0
     m_SerializedVersion: 1
   m_SerializedVersion: 1
+--- !u!114 &-6122081054514893335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3581284997004122245}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 664351979eff4201b670c9f711c6a599, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_mustBeDestroyed: 0
+--- !u!114 &-1946460876647261352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3581284997004122245}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ecedb9f484e413b9b387a67cf430ebb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7558687672449279413
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3581284997004122245}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6f4e9a758df48ed802decc0082e764d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_points: 0
+--- !u!114 &271216578197507260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3581284997004122245}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90d2077b588251b4a9ed4bcb4e0f4a1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_mesh: {fileID: 3132876249159020217}
 --- !u!1 &5493982916771749980
 GameObject:
   m_ObjectHideFlags: 0
