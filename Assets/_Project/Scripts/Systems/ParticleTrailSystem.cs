@@ -45,7 +45,7 @@ namespace _Project.Scripts.Systems
         protected override void OnUpdate()
         {
             var deltaTime = Time.DeltaTime;
-            Entities.WithStructuralChanges().WithAll<ParticleEffectLink>().WithAll<EffectIDSystemState>().ForEach((Entity _entity, 
+            Entities.WithStructuralChanges().WithAll<ParticleEffectLink>().WithNone<PauseMovementDataComponent>().WithAll<EffectIDSystemState>().ForEach((Entity _entity, 
                 ref AutoDestroyAfterSeconds _destroyAfter)=>
             {
                 _destroyAfter.m_lifeSpent += deltaTime;

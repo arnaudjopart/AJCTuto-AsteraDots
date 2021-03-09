@@ -13,9 +13,15 @@ namespace _Project.Scripts.Systems
             var query = GetEntityQuery(typeof(InputComponentData));
             var array = query.ToComponentDataArray<InputComponentData>(Allocator.TempJob);
 
+            if (array.Length == 0)
+            {
+                array.Dispose();
+                return;
+            }
             var inputData = array[0];
             
-            Entities.WithAll<PlayerTagComponent>().ForEach((ref MovementCommandsComponentData _movementInfoComponent,ref WeaponComponentData _weaponComponent) =>
+            Entities.WithAll<PlayerTagComponent>().WithNone<PauseMovementDataComponent>().
+                ForEach((ref MovementCommandsComponentData _movementInfoComponent,ref WeaponComponentData _weaponComponent) =>
             {
                 var turningLeft = inputData.m_inputLeft ? 1 : 0;
                 var turningRight = inputData.m_inputRight ? 1 : 0;

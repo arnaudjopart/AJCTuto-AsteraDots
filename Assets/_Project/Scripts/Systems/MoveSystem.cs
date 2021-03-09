@@ -11,7 +11,7 @@ namespace _Project.Scripts.Systems
    
         protected override void OnUpdate()
         {
-            Entities.ForEach((
+            Entities.WithNone<PauseMovementDataComponent>(). ForEach((
                 ref MovementCommandsComponentData _movementInfoComponent,
                 ref PhysicsVelocity _velocity,
                 in MovementParametersComponentData _moveComponentData,  
