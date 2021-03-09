@@ -1,3 +1,4 @@
+using System;
 using Unity.Entities;
 using Unity.Mathematics;
 using UnityEngine;
@@ -8,6 +9,9 @@ namespace _Project.Scripts.Mono
     {
         public Camera m_camera;
         private EntityManager m_entityManager;
+        public Entity m_asteroidEntityLibrary;
+        private float m_currentTimer;
+        public float m_asteroidSpawnFrequency;
 
         private void Awake()
         {
@@ -19,6 +23,7 @@ namespace _Project.Scripts.Mono
             var screenSize = GetScreenSize();
 
             var sys = World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<OffScreenDetectionSystem>();
+            
             sys.SetSingleton(new ScreenDataComponent()
             {
                 m_width = screenSize.x,
@@ -33,7 +38,23 @@ namespace _Project.Scripts.Mono
             m_entityManager.CreateEntity(typeof(InputComponentData));
         
         }
-        
+
+        private void Update()
+        {
+            m_currentTimer += Time.deltaTime;
+            if (m_currentTimer > m_asteroidSpawnFrequency)
+            {
+                m_currentTimer = 0;
+                SpawnAsteroid();
+            }
+        }
+
+        private void SpawnAsteroid()
+        {
+            var buffer = m_entityManager.GetBuffer<EntityBufferElement>(m_asteroidEntityLibrary);
+            m_entityManager.Instantiate(buffer[0].m_entity);
+        }
+
         private float2 GetScreenSize()
         {
             var bottomLeftCornerPosition = m_camera.ViewportToWorldPoint(new Vector3(0, 0));
