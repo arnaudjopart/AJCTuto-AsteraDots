@@ -93,9 +93,10 @@ namespace _Project.Scripts.Mono
                 Value = spawnPosition
             });
             
-            m_entityManager.AddComponentData(newAsteroid, new SizeComponentData()
+            m_entityManager.SetComponentData(newAsteroid, new AsteroidTagComponent()
             {
-                Value = 3
+                m_size = 3,
+                m_nbChildren = 2
             });
             
             var randomMoveDirection = math.normalize(new float3(Random.Range(-.8f,.8f), Random.Range(-.8f,.8f), 0));
