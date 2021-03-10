@@ -93,7 +93,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_linearVelocity: 0.2
   m_maxLinearVelocity: 2
-  m_angularVelocity: 0
+  m_angularVelocity: 2
   m_maxAngularVelocity: 0.8
 --- !u!114 &1290769901207293854
 MonoBehaviour:

@@ -1,8 +1,10 @@
 using System;
+using _Project.Scripts.Components;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace _Project.Scripts.Mono
 {
@@ -17,10 +19,17 @@ namespace _Project.Scripts.Mono
         private Entity m_gameState;
         public static bool NeedToSpawnPlayer { get; set; }
 
+        public Transform[] m_spawnPositions;
+        
         private void Awake()
         {
             m_instance = this;
-            
+
+            m_spawnPositionsVectors = new Vector3[m_spawnPositions.Length];
+            for (var i = 0; i < m_spawnPositionsVectors.Length; i++)
+            {
+                m_spawnPositionsVectors[i] = m_spawnPositions[i].position;
+            }
             m_entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
             
             var screenInfoEntity = m_entityManager.CreateEntity(ComponentType.ReadOnly<ScreenDataComponent>());
@@ -74,7 +83,32 @@ namespace _Project.Scripts.Mono
         private void SpawnAsteroid()
         {
             var buffer = m_entityManager.GetBuffer<EntityBufferElement>(m_asteroidEntityLibrary);
-            m_entityManager.Instantiate(buffer[0].m_entity);
+            var newAsteroid = m_entityManager.Instantiate(buffer[0].m_entity);
+
+            var spawnPositionRandomIndex = UnityEngine.Random.Range(0, m_spawnPositionsVectors.Length);
+            var spawnPosition = m_spawnPositionsVectors[spawnPositionRandomIndex];
+            
+            m_entityManager.SetComponentData(newAsteroid, new Translation()
+            {
+                Value = spawnPosition
+            });
+            
+            m_entityManager.AddComponentData(newAsteroid, new SizeComponentData()
+            {
+                Value = 3
+            });
+            
+            var randomMoveDirection = math.normalize(new float3(Random.Range(-.8f,.8f), Random.Range(-.8f,.8f), 0));
+            var randomRotation = math.normalize(new float3(Random.value, Random.value, 0));
+            
+            m_instance.m_entityManager.SetComponentData(newAsteroid, new MovementCommandsComponentData()
+            {
+                m_previousPosition = spawnPosition,
+                m_directionOfMove = randomMoveDirection,
+                m_linearImpulseCommand = 1,
+                m_angularImpulse = 1,
+                m_angularVector = randomRotation
+            });
         }
 
         public void SignalPlayerDeath()
@@ -102,18 +136,25 @@ namespace _Project.Scripts.Mono
         {
             
             var ship = m_instance.m_entityManager.GetComponentData<ShipReferenceInBoostrapComponentData>(m_instance.m_shipReference);
+
             
             var newShipEntity = m_instance.m_entityManager.Instantiate(ship.m_ship);
             m_instance.m_entityManager.SetComponentData(newShipEntity, new Translation()
             {
                 Value = _float3
             });
+            
+            
         }
 
         private static BootStrap m_instance;
+        private Vector3[] m_spawnPositionsVectors;
     }
-    
-   
+
+    internal struct SizeComponentData : IComponentData
+    {
+        public float Value;
+    }
 }
 
 
@@ -121,4 +162,17 @@ public struct ScreenDataComponent : IComponentData
 {
     public float m_height;
     public float m_width;
+}
+
+
+[CreateAssetMenu(menuName = "Level/Level Data")]
+public class LevelDatScriptableObject : ScriptableObject
+{
+    public int m_nbOfAsteroids;
+    public int m_nbOfChildren;
+
+    public int NbOfHits
+    {
+        get { return m_nbOfAsteroids*(1+m_nbOfChildren+(m_nbOfChildren*m_nbOfChildren)); }
+    }
 }

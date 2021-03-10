@@ -29,9 +29,9 @@ public class OffScreenWrappingSystem : SystemBase
             Entity _entity, 
             ref OffScreenWrapperComponent _offScreenWrapperComponent, 
             ref Translation _translation) => {
-            if (_offScreenWrapperComponent.m_isOffScreen)
+            if (true)
             {
-                if (_translation.Value.x < -screenDataComponent.m_width * .5f)
+                if (_offScreenWrapperComponent.m_isOffScreenLeft)
                 {
                     var newXPosition = SpawnOnRightSide(_translation.Value.x, 
                         _offScreenWrapperComponent.m_bounds,
@@ -39,7 +39,7 @@ public class OffScreenWrappingSystem : SystemBase
                     var newPosition = new float3(newXPosition, _translation.Value.y, 0);
                     _translation.Value = newPosition;
                 }
-                else if (_translation.Value.x > screenDataComponent.m_width * .5f)
+                else if (_offScreenWrapperComponent.m_isOffScreenRight)
                 {
                     var newXPosition = SpawnOnLeftSide(_translation.Value.x, 
                         _offScreenWrapperComponent.m_bounds,
@@ -47,7 +47,7 @@ public class OffScreenWrappingSystem : SystemBase
                     var newPosition = new float3(newXPosition, _translation.Value.y, 0);
                     _translation.Value = newPosition;
                 }
-                else if (_translation.Value.y > screenDataComponent.m_height * .5f)
+                else if (_offScreenWrapperComponent.m_isOffScreenUp)
                 {
                     var newYPosition = SpawnOnBottomSide(_translation.Value.y, 
                         _offScreenWrapperComponent.m_bounds,
@@ -55,7 +55,7 @@ public class OffScreenWrappingSystem : SystemBase
                     var newPosition = new float3(_translation.Value.x, newYPosition, 0);
                     _translation.Value = newPosition;
                 }
-                else if (_translation.Value.y < -screenDataComponent.m_height * .5f)
+                else if (_offScreenWrapperComponent.m_isOffScreenDown)
                 {
                     var newYPosition = SpawnOnTopSide(_translation.Value.y, 
                         _offScreenWrapperComponent.m_bounds,
@@ -66,7 +66,11 @@ public class OffScreenWrappingSystem : SystemBase
                 
             }
 
-            _offScreenWrapperComponent.m_isOffScreen = false;
+            //_offScreenWrapperComponent.m_isOffScreen = false;
+            _offScreenWrapperComponent.m_isOffScreenDown = false;
+            _offScreenWrapperComponent.m_isOffScreenRight = false;
+            _offScreenWrapperComponent.m_isOffScreenUp = false;
+            _offScreenWrapperComponent.m_isOffScreenLeft = false;
             
         }).ScheduleParallel();
     }
