@@ -25,11 +25,14 @@ public class AsteroidDestructionSystem : SystemBase
 
         var buffer = entityManager.GetBuffer<EntityBufferElement>(array[0]);
 
-        var spawnEntity = buffer[0].m_entity;
-        
+        var nativeArrayOfAsteroids = new NativeArray<Entity>(3, Allocator.TempJob);
+
+        for (var i = 0; i < nativeArrayOfAsteroids.Length; i++)
+        {
+            nativeArrayOfAsteroids[i] = buffer[i].m_entity;
+        }
         Entities.WithoutBurst().WithStructuralChanges().WithAll<AsteroidTagComponent>().ForEach((Entity _entity,
-            in DestroyableComponentData _destroyable, 
-            in PointsComponentData _points, 
+            in DestroyableComponentData _destroyable,
             in Translation _translation, 
             in AsteroidTagComponent _asteroid) =>
         {
@@ -43,17 +46,19 @@ public class AsteroidDestructionSystem : SystemBase
 
                     for (int i = 0; i < nbChildren; i++)
                     {
-                        var child = entityManager.Instantiate(spawnEntity);
+                        var child = entityManager.Instantiate(nativeArrayOfAsteroids[newSize-1]);
                         
                         entityManager.SetComponentData(child,new Translation()
                         {
                             Value = spawnPosition
                         });
-
+                        var points = i == 2 ? 200 : 300;
+                       
                         entityManager.SetComponentData(child, new AsteroidTagComponent()
                         {
                             m_size = newSize,
-                            m_nbChildren = nbChildren
+                            m_nbChildren = nbChildren,
+                            m_points = points
                         });
 
                         var randomMoveDirection = math.normalize(new float3(UnityEngine.Random.Range(-.8f,.8f), UnityEngine.Random.Range(-.8f,.8f), 0));
@@ -71,12 +76,13 @@ public class AsteroidDestructionSystem : SystemBase
                     
                 }
 
-                //ScoreManager.AddPoints(_points.m_points);
+                GameEventManager.RaiseAsteroidDestroyedEvent(_asteroid.m_points);
                 entityManager.DestroyEntity(_entity);
                 var fx = FXPool.GetExplosionFx();
                 fx.transform.position = _translation.Value;
             }
         }).Run();
         array.Dispose();
+        nativeArrayOfAsteroids.Dispose();
     }
 }

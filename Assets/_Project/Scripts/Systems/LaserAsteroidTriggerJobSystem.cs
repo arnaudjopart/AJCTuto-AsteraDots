@@ -79,6 +79,13 @@ public class LaserAsteroidTriggerJobSystem : JobComponentSystem
 
                     m_destroyables[triggerEvent.EntityA] = a;
                 }
+                if (m_destroyables.HasComponent(triggerEvent.EntityB))
+                {
+                    
+                    var a =m_destroyables[triggerEvent.EntityB];
+                    a.m_mustBeDestroyed = true;
+                    m_destroyables[triggerEvent.EntityB] = a;
+                }
             }
 
             if (entityAIsAProjectile && entityBIsAnAsteroid)
@@ -94,6 +101,13 @@ public class LaserAsteroidTriggerJobSystem : JobComponentSystem
                 else
                 {
                     Debug.Log("Not found destroy");
+                }
+                if (m_destroyables.HasComponent(triggerEvent.EntityA))
+                {
+                    
+                    var a =m_destroyables[triggerEvent.EntityA];
+                    a.m_mustBeDestroyed = true;
+                    m_destroyables[triggerEvent.EntityA] = a;
                 }
                 
             }

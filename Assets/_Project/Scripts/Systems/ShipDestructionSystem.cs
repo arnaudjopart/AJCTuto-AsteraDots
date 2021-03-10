@@ -26,6 +26,10 @@ public class ShipDestructionSystem : SystemBase
                 Debug.Log("Destroying ship");
                 GameEventManager.RaisePlayerDeathEvent();
                 BootStrap.NeedToSpawnPlayer = true;
+                var test = m_entityManager.GetComponentObject<Transform>(_entity);
+                Object.Destroy(test.gameObject);
+                m_entityManager.DestroyEntity(_entity);
+                
                 m_entityManager.DestroyEntity(_entity);
             }
         }).Run();

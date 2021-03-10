@@ -1,15 +1,29 @@
 using System;
 using _Project.Scripts.Components;
+using _Project.Scripts.ScriptableObjects;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 namespace _Project.Scripts.Mono
 {
     public class BootStrap : MonoBehaviour
     {
+        public int m_lives;
+        public int m_startLives=3;
+        public GameEvent m_onLevelCompletedEvent;
+        public IntGameEvent m_onLivesChangeEvent;
+        public IntGameEvent m_onLevelStartsEvent;
+        public LevelDataScriptableObject[] m_levelDataScriptableObjects;
+        private LevelDataScriptableObject m_currentLevelData;
+
+        public int m_hits;
+
+        public int m_currentLevelIndex=-1;
+        
         public Camera m_camera;
         private EntityManager m_entityManager;
         public Entity m_asteroidEntityLibrary;
@@ -32,11 +46,14 @@ namespace _Project.Scripts.Mono
             }
             m_entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
             
+            var sys = World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<OffScreenDetectionSystem>();
+
+            var singletonAlreadyExists = sys.TryGetSingleton(out ScreenDataComponent component);
+            if (singletonAlreadyExists) return;
             var screenInfoEntity = m_entityManager.CreateEntity(ComponentType.ReadOnly<ScreenDataComponent>());
 
             var screenSize = GetScreenSize();
 
-            var sys = World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<OffScreenDetectionSystem>();
             
             sys.SetSingleton(new ScreenDataComponent()
             {
@@ -47,11 +64,14 @@ namespace _Project.Scripts.Mono
 
         private void Start()
         {
-            StartGame();
+            //StartGame();
         }
 
         public void StartGame()
         {
+            m_lives = m_startLives;
+            StartNextLevel();
+            m_onLivesChangeEvent.Raise(m_lives);    
             m_entityManager.CreateEntity(typeof(InputComponentData));
             m_gameState = m_entityManager.CreateEntity(typeof(GameStateDataComponent));
             SpawnPlayerAt(float3.zero);
@@ -59,13 +79,6 @@ namespace _Project.Scripts.Mono
 
         private void Update()
         {
-            m_currentTimer += Time.deltaTime;
-            if (m_currentTimer > m_asteroidSpawnFrequency)
-            {
-                m_currentTimer = 0;
-                SpawnAsteroid();
-            }
-
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 var state = m_entityManager.GetComponentData<GameStateDataComponent>(m_gameState);
@@ -78,12 +91,26 @@ namespace _Project.Scripts.Mono
 
                 Time.timeScale = pause ? 0 : 1;
             }
+            
+            
+            if (m_nbAsteroidAlreadySpawnedInThisLevel >= m_currentLevelData.m_nbOfAsteroids) return;
+            
+            m_currentTimer += Time.deltaTime;
+            if (m_currentTimer > m_asteroidSpawnFrequency)
+            {
+                m_nbAsteroidAlreadySpawnedInThisLevel++;
+                
+                m_currentTimer = 0;
+                SpawnAsteroid();
+            }
+
+            
         }
 
         private void SpawnAsteroid()
         {
             var buffer = m_entityManager.GetBuffer<EntityBufferElement>(m_asteroidEntityLibrary);
-            var newAsteroid = m_entityManager.Instantiate(buffer[0].m_entity);
+            var newAsteroid = m_entityManager.Instantiate(buffer[2].m_entity);
 
             var spawnPositionRandomIndex = UnityEngine.Random.Range(0, m_spawnPositionsVectors.Length);
             var spawnPosition = m_spawnPositionsVectors[spawnPositionRandomIndex];
@@ -96,7 +123,8 @@ namespace _Project.Scripts.Mono
             m_entityManager.SetComponentData(newAsteroid, new AsteroidTagComponent()
             {
                 m_size = 3,
-                m_nbChildren = 2
+                m_nbChildren = m_currentLevelData.m_nbOfChildren,
+                m_points = 100
             });
             
             var randomMoveDirection = math.normalize(new float3(Random.Range(-.8f,.8f), Random.Range(-.8f,.8f), 0));
@@ -114,8 +142,20 @@ namespace _Project.Scripts.Mono
 
         public void SignalPlayerDeath()
         {
-            Invoke(nameof(LookForPlayerSpawnPosition),3);
+            m_lives -= 1;
+            if (m_lives < 0)
+            {
+                GameOver();
+                return;
+            }
+            m_onLivesChangeEvent.Raise(m_lives);    
+            Invoke(nameof(LookForPlayerSpawnPosition),1);
             
+        }
+
+        private void GameOver()
+        {
+            SceneManager.LoadScene(0);
         }
 
         public void LookForPlayerSpawnPosition()
@@ -147,15 +187,34 @@ namespace _Project.Scripts.Mono
             
             
         }
+        
+        public void StartNextLevel()
+        {
+            m_currentLevelIndex++;
+            m_onLevelStartsEvent.Raise(m_currentLevelIndex+1);
+            m_currentLevelData = m_levelDataScriptableObjects[m_currentLevelIndex];
+            m_hits = 0;
+            m_nbAsteroidAlreadySpawnedInThisLevel = 0;
+            print("Hits to complete: "+m_currentLevelData.NbOfHits);
+        }
+
+        public void AddHit()
+        {
+            m_hits++;
+            if (m_hits >= m_currentLevelData.NbOfHits)
+            {
+                print("LevelCompleted");
+                m_onLevelCompletedEvent.Raise();
+                StartNextLevel();
+            }
+        }
 
         private static BootStrap m_instance;
         private Vector3[] m_spawnPositionsVectors;
+        private int m_nbAsteroidAlreadySpawnedInThisLevel;
+        
     }
 
-    internal struct SizeComponentData : IComponentData
-    {
-        public float Value;
-    }
 }
 
 
@@ -163,17 +222,4 @@ public struct ScreenDataComponent : IComponentData
 {
     public float m_height;
     public float m_width;
-}
-
-
-[CreateAssetMenu(menuName = "Level/Level Data")]
-public class LevelDatScriptableObject : ScriptableObject
-{
-    public int m_nbOfAsteroids;
-    public int m_nbOfChildren;
-
-    public int NbOfHits
-    {
-        get { return m_nbOfAsteroids*(1+m_nbOfChildren+(m_nbOfChildren*m_nbOfChildren)); }
-    }
 }

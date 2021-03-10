@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 78153219}
   - component: {fileID: 78153218}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: GameEventManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -153,6 +153,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_onPlayerDeathEvent: {fileID: 11400000, guid: 0509ce8d7d64841b39fa03c9b506b4b1, type: 2}
+  m_onAsteroidDestroyedEvent: {fileID: 11400000, guid: 5bc1f464d79344722b3374d3aafb9b96, type: 2}
 --- !u!4 &78153219
 Transform:
   m_ObjectHideFlags: 0
@@ -334,6 +335,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a82f4bc67e5e19c4c85778d76c225742, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_lives: 0
+  m_startLives: 3
+  m_onLevelCompletedEvent: {fileID: 11400000, guid: 24ddd8d7dc1d143a49fe4be7f4b83cee, type: 2}
+  m_onLivesChangeEvent: {fileID: 11400000, guid: a6033449fb5f542deb85ad67b104e2fa, type: 2}
+  m_onLevelStartsEvent: {fileID: 11400000, guid: ba4ff91a395b9485f8d085a923f6910e, type: 2}
+  m_levelDataScriptableObjects:
+  - {fileID: 11400000, guid: 7bb1846086cf74960b791070c14bda35, type: 2}
+  - {fileID: 11400000, guid: 2346bc7d40c984e498cebccdcf0591ec, type: 2}
+  - {fileID: 11400000, guid: a2d172366faf74974b67e936c3ba5922, type: 2}
+  m_hits: 0
+  m_currentLevelIndex: -1
   m_camera: {fileID: 963194227}
   m_asteroidSpawnFrequency: 1
   m_spawnPositions:
@@ -5326,7 +5338,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_bootStrap: {fileID: 281389675}
   m_asteroidsPrefabCollection:
+  - {fileID: 965113428106761260, guid: fba989c9985754291bff21441de95a36, type: 3}
   - {fileID: 3581284997004122245, guid: d4fe43174a7e0654cadf40ad5d796eb0, type: 3}
+  - {fileID: 6616735074397246569, guid: 95870cbaeef5c4b9c9e6deca606adadc, type: 3}
 --- !u!4 &431649079
 Transform:
   m_ObjectHideFlags: 0
@@ -5664,6 +5678,7 @@ GameObject:
   - component: {fileID: 991088576}
   - component: {fileID: 991088578}
   - component: {fileID: 991088577}
+  - component: {fileID: 991088579}
   m_Layer: 0
   m_Name: -- GameEventListeners
   m_TagString: Untagged
@@ -5741,6 +5756,34 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &991088579
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 991088575}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8595c7ae802335f4e937b5572fdaab4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 281389675}
+        m_TargetAssemblyTypeName: _Project.Scripts.Mono.BootStrap, Assembly-CSharp
+        m_MethodName: AddHit
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  m_event: {fileID: 11400000, guid: 5bc1f464d79344722b3374d3aafb9b96, type: 2}
 --- !u!1 &1088415394
 GameObject:
   m_ObjectHideFlags: 0
