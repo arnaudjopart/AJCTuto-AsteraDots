@@ -237,6 +237,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7bb1846086cf74960b791070c14bda35, type: 2}
   - {fileID: 11400000, guid: 2346bc7d40c984e498cebccdcf0591ec, type: 2}
   - {fileID: 11400000, guid: a2d172366faf74974b67e936c3ba5922, type: 2}
+  - {fileID: 11400000, guid: 89f018ef59c51497ebdcb28eb3311fb7, type: 2}
+  - {fileID: 11400000, guid: c4eb6ca030f5e4f1990d604d1112814a, type: 2}
   m_hits: 0
   m_currentLevelIndex: -1
   m_camera: {fileID: 0}

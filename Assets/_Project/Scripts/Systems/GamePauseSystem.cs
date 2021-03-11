@@ -21,6 +21,7 @@ public class GamePauseSystem : SystemBase
     protected override void OnUpdate()
     {
         var query = GetEntityQuery(typeof(GameStateDataComponent));
+        
         var component = query.ToComponentDataArray<GameStateDataComponent>(Allocator.TempJob);
         if (component.Length == 0)
         {
@@ -85,17 +86,4 @@ public class GamePauseSystem : SystemBase
         
 
     }
-}
-
-public struct PauseMovementDataComponent : ISystemStateComponentData
-{
-    public float3 m_savedLinearVelocity;
-    public float3 m_savedAngularVelocity;
-    public float m_savedLinearImpulse;
-    public float m_savedAngularImpulse;
-}
-
-public struct GameStateDataComponent : IComponentData
-{
-    public bool m_isOnPause;
 }

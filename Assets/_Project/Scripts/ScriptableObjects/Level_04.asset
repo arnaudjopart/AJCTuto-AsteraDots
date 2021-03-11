@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7491757a50464876b54b41b007df2643, type: 3}
-  m_Name: Level_03
+  m_Name: Level_04
   m_EditorClassIdentifier: 
-  m_nbOfAsteroids: 5
-  m_nbOfChildren: 3
+  m_nbOfAsteroids: 3
+  m_nbOfChildren: 4
