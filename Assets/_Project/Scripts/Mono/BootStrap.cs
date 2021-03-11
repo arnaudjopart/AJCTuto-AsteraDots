@@ -79,6 +79,11 @@ namespace _Project.Scripts.Mono
 
         private void Update()
         {
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                SceneManager.LoadScene(0);
+            }
+
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 var state = m_entityManager.GetComponentData<GameStateDataComponent>(m_gameState);
@@ -209,11 +214,22 @@ namespace _Project.Scripts.Mono
             }
         }
 
+        private void OnDestroy()
+        {
+            DestroyAllEntities();
+        }
+        
+        void DestroyAllEntities() {
+            m_entityManager.DestroyEntity(m_entityManager.UniversalQuery);
+        }
+
         private static BootStrap m_instance;
         private Vector3[] m_spawnPositionsVectors;
         private int m_nbAsteroidAlreadySpawnedInThisLevel;
         
     }
+    
+    
 
 }
 
