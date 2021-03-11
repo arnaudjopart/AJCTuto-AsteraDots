@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using _Project.Scripts.Components;
 using _Project.Scripts.ScriptableObjects;
 using Unity.Entities;
@@ -38,6 +39,7 @@ namespace _Project.Scripts.Mono
         private void Awake()
         {
             m_instance = this;
+            m_camera = FindObjectOfType<Camera>().GetComponent<Camera>();
 
             m_spawnPositionsVectors = new Vector3[m_spawnPositions.Length];
             for (var i = 0; i < m_spawnPositionsVectors.Length; i++)
@@ -62,9 +64,10 @@ namespace _Project.Scripts.Mono
             });
         }
 
-        private void Start()
+        private IEnumerator Start()
         {
-            //StartGame();
+            yield return new WaitForSeconds(.2f);
+            StartGame();
         }
 
         public void StartGame()
@@ -96,8 +99,8 @@ namespace _Project.Scripts.Mono
 
                 Time.timeScale = pause ? 0 : 1;
             }
-            
-            
+
+            if (m_currentLevelData == null) return;
             if (m_nbAsteroidAlreadySpawnedInThisLevel >= m_currentLevelData.m_nbOfAsteroids) return;
             
             m_currentTimer += Time.deltaTime;

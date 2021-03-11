@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Project/_Scenes/00c_InGameUI.unity
     guid: 8824486ec41364a2aa6a49cf92213542
+  - enabled: 1
+    path: Assets/_Project/_Scenes/00c_Camera.unity
+    guid: ce4ca56e393254fb697de3534a3b096c
   m_configObjects: {}

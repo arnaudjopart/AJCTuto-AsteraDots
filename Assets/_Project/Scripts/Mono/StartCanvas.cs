@@ -17,6 +17,8 @@ public class StartCanvas : MonoBehaviour
     
     [SerializeField]
     private string m_sceneToLoad;
+    [SerializeField]
+    private string m_sceneToLoad2;
 
     // Start is called before the first frame update
     void Start()
@@ -36,8 +38,8 @@ public class StartCanvas : MonoBehaviour
 
     public void StartGame()
     {
-        
         m_startEvent.Raise();
+        m_loadSceneEvent.Raise(m_sceneToLoad2);
     }
 
 }
