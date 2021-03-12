@@ -92,8 +92,3 @@ public class PlayerSpawnSystem : SystemBase
 
     }
 }
-
-public struct SpawnSignal : IComponentData
-{
-    //public float3 m_position;
-}

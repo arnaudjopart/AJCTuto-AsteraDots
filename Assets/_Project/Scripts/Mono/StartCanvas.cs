@@ -28,11 +28,12 @@ public class StartCanvas : MonoBehaviour
 
     private void Close()
     {
+        
         m_startButton.gameObject.SetActive(false);
         m_loadSceneEvent.Raise(m_sceneToLoad);
         var sequence = DOTween.Sequence();
         sequence.Join(m_gameLogo.GetComponent<RectTransform>().DOScale(Vector3.zero, 1).SetEase(Ease.InElastic));
-        sequence.Join(m_gameLogo.GetComponent<Image>().DOFade(0, .8f));
+        //sequence.Join(m_gameLogo.GetComponent<Image>()
         sequence.OnComplete(StartGame);
     }
 

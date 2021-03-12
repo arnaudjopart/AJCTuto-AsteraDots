@@ -206,8 +206,9 @@ namespace _Project.Scripts.Mono
             print("Hits to complete: "+m_currentLevelData.NbOfHits);
         }
 
-        public void AddHit()
+        public void AddHit(int _score)
         {
+            m_currentScore += _score;
             m_hits++;
             if (m_hits >= m_currentLevelData.NbOfHits)
             {
@@ -229,7 +230,7 @@ namespace _Project.Scripts.Mono
         private static BootStrap m_instance;
         private Vector3[] m_spawnPositionsVectors;
         private int m_nbAsteroidAlreadySpawnedInThisLevel;
-        
+        public int m_currentScore;
     }
     
     
