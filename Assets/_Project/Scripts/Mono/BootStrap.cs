@@ -1,3 +1,4 @@
+using _Project.Scripts.Components;
 using Unity.Entities;
 using UnityEngine;
 
