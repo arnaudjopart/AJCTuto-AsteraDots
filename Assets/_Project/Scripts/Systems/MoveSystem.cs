@@ -8,7 +8,6 @@ namespace _Project.Scripts.Systems
 {
     public class MoveSystem : SystemBase
     {
-   
         protected override void OnUpdate()
         {
             Entities.WithNone<PauseMovementDataComponent>(). ForEach((
@@ -20,7 +19,10 @@ namespace _Project.Scripts.Systems
                 PhysicsComponentExtensions.ApplyLinearImpulse(
                     ref _velocity, 
                     _physicsMass, 
-                    _movementInfoComponent.m_directionOfMove * _movementInfoComponent.m_linearImpulseCommand* _moveComponentData.m_linearVelocity);
+                    _movementInfoComponent.m_currentDirectionOfMove * 
+                    _movementInfoComponent.m_currentlinearCommand * 
+                    _moveComponentData.m_linearVelocity
+                    );
             
                 if (math.length(_velocity.Linear) > _moveComponentData.m_maxLinearVelocity) 
                     _velocity.Linear = math.normalize(_velocity.Linear) * _moveComponentData.m_maxLinearVelocity;

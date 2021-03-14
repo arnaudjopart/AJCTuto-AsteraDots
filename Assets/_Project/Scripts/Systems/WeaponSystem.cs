@@ -45,7 +45,7 @@ namespace _Project.Scripts.Systems
 
                         ecb.SetComponent(entityInQueryIndex , newProjectile, new MovementCommandsComponentData()
                         {
-                            m_linearImpulseCommand = 1,
+                            m_currentlinearCommand = 1,
                         });
                         
                         ecb.SetComponent(entityInQueryIndex , newProjectile, new AutoDestroyAfterSeconds()

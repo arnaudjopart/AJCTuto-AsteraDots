@@ -21,7 +21,7 @@ namespace _Project.Scripts.Systems
             var inputData = array[0];
             
             Entities.WithAll<PlayerTagComponent>().WithNone<PauseMovementDataComponent>().
-                ForEach((ref MovementCommandsComponentData _movementInfoComponent,ref WeaponComponentData _weaponComponent) =>
+                ForEach((ref MovementCommandsComponentData _movementCommandsComponentData,ref WeaponComponentData _weaponComponent) =>
             {
                 var turningLeft = inputData.m_inputLeft ? 1 : 0;
                 var turningRight = inputData.m_inputRight ? 1 : 0;
@@ -30,8 +30,8 @@ namespace _Project.Scripts.Systems
 
                 _weaponComponent.m_isFiring = inputData.m_inputShoot;
                 
-                _movementInfoComponent.m_angularVector = new float3( 0,0,rotationDirection);
-                _movementInfoComponent.m_linearImpulseCommand = inputData.m_inputForward?1:0;
+                _movementCommandsComponentData.m_currentAngularCommand = new float3(0,0,rotationDirection);
+                _movementCommandsComponentData.m_currentlinearCommand = inputData.m_inputForward?1:0;
 
             }).ScheduleParallel();
             

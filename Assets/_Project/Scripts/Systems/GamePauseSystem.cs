@@ -41,7 +41,7 @@ public class GamePauseSystem : SystemBase
                 ref PauseMovementDataComponent _pauseMovementData) =>
             {
                 _movementCommands.m_angularImpulse = _pauseMovementData.m_savedAngularImpulse;
-                _movementCommands.m_linearImpulseCommand = _pauseMovementData.m_savedLinearImpulse;
+                _movementCommands.m_currentlinearCommand = _pauseMovementData.m_savedLinearImpulse;
 
                 _velocity.Linear = _pauseMovementData.m_savedLinearVelocity;
                 _velocity.Angular = _pauseMovementData.m_savedAngularVelocity;
@@ -60,7 +60,7 @@ public class GamePauseSystem : SystemBase
                 ref MovementCommandsComponentData _movementCommands, ref PhysicsVelocity _velocity) =>
             {
                 var currentAngularImpulse = _movementCommands.m_angularImpulse;
-                var currentLinearImpulse = _movementCommands.m_linearImpulseCommand;
+                var currentLinearImpulse = _movementCommands.m_currentlinearCommand;
             
             
             
@@ -73,7 +73,7 @@ public class GamePauseSystem : SystemBase
                 });
             
                 _movementCommands.m_angularImpulse = 0;
-                _movementCommands.m_linearImpulseCommand = 0;
+                _movementCommands.m_currentlinearCommand = 0;
 
                 _velocity.Angular = float3.zero;
                 _velocity.Linear = float3.zero;

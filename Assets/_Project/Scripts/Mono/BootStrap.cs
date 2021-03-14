@@ -141,10 +141,10 @@ namespace _Project.Scripts.Mono
             m_instance.m_entityManager.SetComponentData(newAsteroid, new MovementCommandsComponentData()
             {
                 m_previousPosition = spawnPosition,
-                m_directionOfMove = randomMoveDirection,
-                m_linearImpulseCommand = 1,
+                m_currentDirectionOfMove = randomMoveDirection,
+                m_currentlinearCommand = 1,
                 m_angularImpulse = 1,
-                m_angularVector = randomRotation
+                m_currentAngularCommand = randomRotation
             });
         }
 
