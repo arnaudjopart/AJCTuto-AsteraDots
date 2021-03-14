@@ -12,7 +12,15 @@ namespace _Project.Scripts.ScriptableObjects.Achievements
         {
             return m_bootStrap.m_currentScore;
         } }
-        public double CurrentLevel { get; set; }
+
+        public double CurrentLevel
+        {
+            get
+            {
+                return m_bootStrap.m_currentLevelIndex;
+            }
+        }
+
         public double CurrentLaserShots { get; set; }
     }
 }
