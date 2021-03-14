@@ -7,7 +7,7 @@ namespace _Project.Scripts.Components
     public struct MovementCommandsComponentData : IComponentData
     {
         public float3 m_currentDirectionOfMove;
-        public float m_currentAngularCommand;
+        public float3 m_currentAngularCommand;
         public float m_currentlinearCommand;
     }
 }
