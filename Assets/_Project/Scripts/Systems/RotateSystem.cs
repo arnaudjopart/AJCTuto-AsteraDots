@@ -17,7 +17,7 @@ namespace _Project.Scripts.Systems
             {
                 PhysicsComponentExtensions.ApplyAngularImpulse(
                     ref _velocity, _physicsMass,
-                    _commandsComponentData.m_currentAngularCommand * _parametersComponentData.m_physicsAngularImpulse);
+                    _commandsComponentData.m_currentAngularCommand * _parametersComponentData.m_angularVelocity);
 
                 var currentAngularSpeed = PhysicsComponentExtensions.GetAngularVelocityWorldSpace(in _velocity, in _physicsMass, in _rotation);
             

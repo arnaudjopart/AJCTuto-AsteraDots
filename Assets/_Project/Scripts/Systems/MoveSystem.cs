@@ -21,7 +21,7 @@ namespace _Project.Scripts.Systems
                     _physicsMass, 
                     _movementInfoComponent.m_currentDirectionOfMove * 
                     _movementInfoComponent.m_currentlinearCommand * 
-                    _moveComponentData.m_physicsLinearImpulse
+                    _moveComponentData.m_linearVelocity
                     );
             
                 if (math.length(_velocity.Linear) > _moveComponentData.m_maxLinearVelocity) 
