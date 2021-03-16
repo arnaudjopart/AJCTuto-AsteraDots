@@ -1,3 +1,4 @@
+using System;
 using _Project.Scripts.ScriptableObjects.Reward;
 using UnityEngine;
 using UnityEngine.SocialPlatforms.Impl;
@@ -12,25 +13,26 @@ namespace _Project.Scripts.ScriptableObjects.Achievements
         public bool m_isUnlocked;
         public RewardScriptableObject[] m_rewards;
         public AchievementCondition[] m_conditions;
-        
-        public bool IsAchievementUnlocked(AchievementManager _achievementManager)
-        {
-            foreach (var condition in m_conditions)
-            {
-                if (!condition.IsVerified(_achievementManager)) return false;
-            }
 
-            return true;
-        }
-        
+        public bool m_override;
+        [HideInInspector]
+        public string m_guid;
+
         public bool IsAchievementUnlocked(GameData _gameData)
         {
+            if (m_override) return true;
+            
             foreach (var condition in m_conditions)
             {
                 if (!condition.IsVerified(_gameData)) return false;
             }
 
             return true;
+        }
+
+        private void OnValidate()
+        {
+            name = m_name;
         }
     }
 

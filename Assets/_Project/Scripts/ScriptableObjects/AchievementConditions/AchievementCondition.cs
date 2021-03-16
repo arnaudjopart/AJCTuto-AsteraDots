@@ -10,29 +10,17 @@ namespace _Project.Scripts.ScriptableObjects.Achievements
 
         public TYPE m_type;
         public float m_threshold;
-
-        public bool IsVerified(AchievementManager _achievementManager)
-        {
-            return m_type switch
-            {
-                TYPE.TIME => _achievementManager.TimeOfPlay >= m_threshold,
-                TYPE.SCORE => _achievementManager.CurrentScore >= m_threshold,
-                TYPE.LEVEL => _achievementManager.CurrentLevel >= m_threshold,
-                TYPE.SHOTS => _achievementManager.CurrentLaserShots>= m_threshold,
-                
-                _ => throw new ArgumentOutOfRangeException()
-            };
-        }
         
-        public bool IsVerified(GameData _achievementManager)
+        
+        public bool IsVerified(GameData _data)
         {
             return m_type switch
             {
-                TYPE.TIME => _achievementManager.TimeOfPlay >= m_threshold,
-                TYPE.SCORE => _achievementManager.CurrentScore >= m_threshold,
-                TYPE.LEVEL => _achievementManager.CurrentLevel >= m_threshold,
-                TYPE.SHOTS => _achievementManager.CurrentLaserShots>= m_threshold,
-                
+                TYPE.TIME => _data.TimeOfPlay >= m_threshold,
+                TYPE.SCORE => _data.CurrentScore >= m_threshold,
+                TYPE.LEVEL => _data.CurrentLevel >= m_threshold,
+                TYPE.SHOTS => _data.CurrentLaserShots>= m_threshold,
+
                 _ => throw new ArgumentOutOfRangeException()
             };
         }

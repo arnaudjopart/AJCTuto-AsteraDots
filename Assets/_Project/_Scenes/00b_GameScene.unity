@@ -123,6 +123,52 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &48682644
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 48682646}
+  - component: {fileID: 48682645}
+  m_Layer: 0
+  m_Name: AchievementManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &48682645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 48682644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a807b82b89474cc7a479cfd8345c86ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_achievementDisplay: {fileID: 0}
+  m_achievementCollection: {fileID: 11400000, guid: 09f681d58a9d270468326dbfb866fbd3, type: 2}
+  m_bootStrap: {fileID: 281389675}
+--- !u!4 &48682646
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 48682644}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -0.13999999}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &78153217
 GameObject:
   m_ObjectHideFlags: 0
@@ -252,6 +298,7 @@ MonoBehaviour:
   - {fileID: 1088415395}
   - {fileID: 454934528}
   - {fileID: 2045483219}
+  m_currentScore: 0
 --- !u!4 &281389676
 Transform:
   m_ObjectHideFlags: 0
@@ -5531,9 +5578,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 281389675}
-        m_TargetAssemblyTypeName: _Project.Scripts.Mono.BootStrap, Assembly-CSharp
+        m_TargetAssemblyTypeName: _Project.Scripts.Mono.BootStrap, Scripts
         m_MethodName: AddHit
-        m_Mode: 1
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

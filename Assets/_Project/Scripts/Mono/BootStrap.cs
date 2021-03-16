@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using _Project.Scripts.Components;
 using _Project.Scripts.ScriptableObjects;
+using _Project.Scripts.ScriptableObjects.Achievements;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
@@ -13,6 +14,7 @@ namespace _Project.Scripts.Mono
 {
     public class BootStrap : MonoBehaviour
     {
+        
         public int m_lives;
         public int m_startLives=3;
         public GameEvent m_onLevelCompletedEvent;
@@ -39,6 +41,8 @@ namespace _Project.Scripts.Mono
         private void Awake()
         {
             m_instance = this;
+
+            m_gameData = new GameData();
             m_camera = FindObjectOfType<Camera>().GetComponent<Camera>();
 
             m_spawnPositionsVectors = new Vector3[m_spawnPositions.Length];
@@ -82,6 +86,8 @@ namespace _Project.Scripts.Mono
 
         private void Update()
         {
+            m_gameData.TimeOfPlay += Time.deltaTime;
+            
             if (Input.GetKeyDown(KeyCode.R))
             {
                 SceneManager.LoadScene(0);
@@ -208,14 +214,11 @@ namespace _Project.Scripts.Mono
 
         public void AddHit(int _score)
         {
-            m_currentScore += _score;
+            m_gameData.CurrentScore += _score;
             m_hits++;
-            if (m_hits >= m_currentLevelData.NbOfHits)
-            {
-                print("LevelCompleted");
-                m_onLevelCompletedEvent.Raise();
-                StartNextLevel();
-            }
+            if (m_hits < m_currentLevelData.NbOfHits) return;
+            m_onLevelCompletedEvent.Raise();
+            StartNextLevel();
         }
 
         private void OnDestroy()
@@ -231,6 +234,7 @@ namespace _Project.Scripts.Mono
         private Vector3[] m_spawnPositionsVectors;
         private int m_nbAsteroidAlreadySpawnedInThisLevel;
         public int m_currentScore;
+        public GameData m_gameData;
     }
     
     
