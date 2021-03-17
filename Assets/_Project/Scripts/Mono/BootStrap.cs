@@ -215,7 +215,7 @@ namespace _Project.Scripts.Mono
         public void StartNextLevel()
         {
             m_currentLevelIndex++;
-            m_gameData.CurrentLevel = m_currentLevelIndex;
+            m_gameData.CurrentLevel = m_currentLevelIndex+1;
             
             m_onLevelStartsEvent.Raise(m_currentLevelIndex+1);
             m_currentLevelData = m_levelDataScriptableObjects[m_currentLevelIndex];
