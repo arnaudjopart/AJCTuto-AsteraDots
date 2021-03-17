@@ -19,8 +19,8 @@ namespace _Project.Scripts.ScriptableObjects.Achievements
                 TYPE.TIME => _data.TimeOfPlay >= m_threshold,
                 TYPE.SCORE => _data.CurrentScore >= m_threshold,
                 TYPE.LEVEL => _data.CurrentLevel >= m_threshold,
-                TYPE.SHOTS => _data.CurrentLaserShots>= m_threshold,
-                TYPE.WARP => _data.NumberOfWrapHit>= m_threshold,
+                TYPE.SHOTS => _data.TotalShot>= m_threshold,
+                TYPE.WARP => _data.TotalNumberOfWrapHit>= m_threshold,
                 _ => throw new ArgumentOutOfRangeException()
             };
         }

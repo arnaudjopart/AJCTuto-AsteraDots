@@ -36,7 +36,7 @@ public class StartCanvas : MonoBehaviour
     private void ResetPlayerPrefs()
     {
         DataSaveLoadUtils.SaveAchievementData("");
-        DataSaveLoadUtils.SaveBestScore(0);
+        DataSaveLoadUtils.SaveGameData("");
     }
 
     private void Close()

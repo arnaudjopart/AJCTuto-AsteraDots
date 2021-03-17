@@ -39,8 +39,9 @@ namespace _Project.Scripts.ScriptableObjects.Achievements
     {
         public float TimeOfPlay;
         public double CurrentScore;
+        public double SavedHighScore;
+        public int TotalShot;
+        public int TotalNumberOfWrapHit;
         public double CurrentLevel;
-        public double CurrentLaserShots;
-        public int NumberOfWrapHit;
     }
 }

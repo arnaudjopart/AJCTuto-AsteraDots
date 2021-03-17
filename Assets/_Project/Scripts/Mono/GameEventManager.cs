@@ -12,8 +12,10 @@ namespace _Project.Scripts.Mono
         public GameEvent m_onPlayerDeathEvent;
         public IntGameEvent m_onAsteroidDestroyedEvent;
         public GameEvent m_onWrapEvent;
+        public GameEvent m_onShootEvent;
         
         private static GameEventManager m_instance;
+        
 
         public static void RaisePlayerDeathEvent()
         {
@@ -28,6 +30,11 @@ namespace _Project.Scripts.Mono
         public static void RaiseWrapHitEvent()
         {
             m_instance.m_onWrapEvent.Raise();
+        }
+
+        public static void RaiseShootEvent()
+        {
+            m_instance.m_onShootEvent.Raise();
         }
     }
 }

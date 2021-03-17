@@ -54,6 +54,7 @@ namespace _Project.Scripts.Mono
                 m_queue.Enqueue(achievement);
                 m_achievementsToUnlockList.RemoveAt(i);
                 SaveAchievementProgress();
+                m_bootStrap.SaveGameData();
             }
             
             HandleAchievementQueue();
@@ -90,8 +91,6 @@ namespace _Project.Scripts.Mono
 
     internal class AchievementSortingSystemFromPlayerPrefs : AchievementSortingSystemBase
     {
-        
-
         public override void Sort(ref List<Achievement> _achievements)
         {
             
@@ -113,18 +112,17 @@ namespace _Project.Scripts.Mono
     {
         private const string ACHIEVEMENT_KEY = "achievements";
         private const string BEST_SCORE_KEY = "bestScore";
+        private const string GAME_DATA = "gameData";
 
         public static string LoadAchievementData()
         {
-            var path = Application.persistentDataPath + ACHIEVEMENT_KEY+".txt";
-            var data = File.ReadAllText(path);
-
-            return data;
+            var path = Application.persistentDataPath +"/"+ ACHIEVEMENT_KEY+".txt";
+            return File.Exists(path) ? File.ReadAllText(path) : "";
         }
         
         public static void SaveAchievementData(string _data)
         {
-            var path = Application.persistentDataPath + ACHIEVEMENT_KEY+".txt";
+            var path = Application.persistentDataPath +"/"+ ACHIEVEMENT_KEY+".txt";
             File.WriteAllText(path, _data);
             //PlayerPrefs.SetString(ACHIEVEMENT_KEY,_data);
         }
@@ -137,6 +135,18 @@ namespace _Project.Scripts.Mono
         public static void SaveBestScore(int _data)
         {
             PlayerPrefs.SetInt(BEST_SCORE_KEY,_data);
+        }
+
+        public static void SaveGameData(string _data)
+        {
+            var path = Application.persistentDataPath +"/"+ GAME_DATA+".txt";
+            File.WriteAllText(path, _data);
+        }
+        
+        public static string GetGameData()
+        {
+            var path = Application.persistentDataPath +"/"+ GAME_DATA+".txt";
+            return File.Exists(path) ? File.ReadAllText(path) : "";
         }
     }
 

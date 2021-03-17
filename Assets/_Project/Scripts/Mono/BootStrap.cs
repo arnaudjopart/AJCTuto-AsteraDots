@@ -42,7 +42,12 @@ namespace _Project.Scripts.Mono
         {
             m_instance = this;
 
-            m_gameData = new GameData();
+            var jsonGameData = DataSaveLoadUtils.GetGameData();
+            m_gameData = string.IsNullOrEmpty(jsonGameData) ? new GameData() : JsonUtility.FromJson<GameData>(jsonGameData);
+
+            m_gameData.CurrentScore = 0;
+            m_gameData.CurrentLevel = 0;
+            
             m_camera = FindObjectOfType<Camera>().GetComponent<Camera>();
 
             m_spawnPositionsVectors = new Vector3[m_spawnPositions.Length];
@@ -171,6 +176,12 @@ namespace _Project.Scripts.Mono
             SceneManager.LoadScene(0);
         }
 
+        public void SaveGameData()
+        {
+            var json = JsonUtility.ToJson(m_gameData);
+            DataSaveLoadUtils.SaveGameData(json);
+        }
+
         public void LookForPlayerSpawnPosition()
         { 
             m_entityManager.CreateEntity(typeof(SpawnSignal));
@@ -204,6 +215,8 @@ namespace _Project.Scripts.Mono
         public void StartNextLevel()
         {
             m_currentLevelIndex++;
+            m_gameData.CurrentLevel = m_currentLevelIndex;
+            
             m_onLevelStartsEvent.Raise(m_currentLevelIndex+1);
             m_currentLevelData = m_levelDataScriptableObjects[m_currentLevelIndex];
             m_hits = 0;
@@ -214,6 +227,11 @@ namespace _Project.Scripts.Mono
         public void AddHit(int _score)
         {
             m_gameData.CurrentScore += _score;
+            if (m_gameData.CurrentScore > m_gameData.SavedHighScore)
+            {
+                // New High Score
+                m_gameData.SavedHighScore = m_gameData.CurrentScore;
+            }
             m_hits++;
             if (m_hits < m_currentLevelData.NbOfHits) return;
             m_onLevelCompletedEvent.Raise();
@@ -222,11 +240,17 @@ namespace _Project.Scripts.Mono
 
         public void AddWrapHit()
         {
-            m_gameData.NumberOfWrapHit++;
+            m_gameData.TotalNumberOfWrapHit++;
+        }
+        
+        public void AddShoot()
+        {
+            m_gameData.TotalShot++;
         }
 
         private void OnDestroy()
         {
+            SaveGameData();
             DestroyAllEntities();
         }
         
@@ -237,7 +261,6 @@ namespace _Project.Scripts.Mono
         private static BootStrap m_instance;
         private Vector3[] m_spawnPositionsVectors;
         private int m_nbAsteroidAlreadySpawnedInThisLevel;
-        public int m_currentScore;
         public GameData m_gameData;
     }
     

@@ -1,3 +1,4 @@
+using _Project.Scripts.Mono;
 using Unity.Entities;
 using Unity.Transforms;
 using UnityEngine;
@@ -18,13 +19,13 @@ namespace _Project.Scripts.Systems
         {
             Entities.WithStructuralChanges().WithAll<ParticleEffectLink>().WithNone<EffectIDSystemState>().ForEach((Entity _entity)=>
             {
-                GameObject obj = FXPool.GetFx();
+                var obj = FXPool.GetFx();
 
                 m_entityManager.AddComponentObject(_entity, obj.transform);
                 m_entityManager.AddComponentData(_entity, new CopyTransformToGameObject() { });
                 m_entityManager.AddComponentData(_entity, new EffectIDSystemState() { });
-                var test = m_entityManager.GetComponentObject<Transform>(_entity);
-                //Object.Destroy(test.gameObject);
+
+                GameEventManager.RaiseShootEvent();
 
             }).Run();
         
