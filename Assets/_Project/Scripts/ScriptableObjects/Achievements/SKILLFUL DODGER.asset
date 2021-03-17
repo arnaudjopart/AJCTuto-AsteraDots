@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffee14d79c38540f89fc2430c631ee68, type: 3}
+  m_Name: SKILLFUL DODGER
+  m_EditorClassIdentifier: 
+  m_name: SKILLFUL DODGER
+  m_description: Reach Level 5
+  m_rewards: []
+  m_conditions:
+  - {fileID: 11400000, guid: f10b083feb68c024cb04127be36712a7, type: 2}
+  m_override: 0
+  m_guid: f016f61045864d0419660c54621d76b0

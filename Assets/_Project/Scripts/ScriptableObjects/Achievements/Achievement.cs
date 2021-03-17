@@ -10,12 +10,11 @@ namespace _Project.Scripts.ScriptableObjects.Achievements
     {
         public string m_name;
         public string m_description;
-        public bool m_isUnlocked;
         public RewardScriptableObject[] m_rewards;
         public AchievementCondition[] m_conditions;
 
         public bool m_override;
-        [HideInInspector]
+        //[HideInInspector]
         public string m_guid;
 
         public bool IsAchievementUnlocked(GameData _gameData)
@@ -42,5 +41,6 @@ namespace _Project.Scripts.ScriptableObjects.Achievements
         public double CurrentScore;
         public double CurrentLevel;
         public double CurrentLaserShots;
+        public int NumberOfWrapHit;
     }
 }

@@ -27,7 +27,7 @@ namespace _Project.Scripts.Mono
 
         public int m_currentLevelIndex=-1;
         
-        public Camera m_camera;
+        private Camera m_camera;
         private EntityManager m_entityManager;
         public Entity m_asteroidEntityLibrary;
         public Entity m_shipReference;
@@ -117,7 +117,6 @@ namespace _Project.Scripts.Mono
                 m_currentTimer = 0;
                 SpawnAsteroid();
             }
-
             
         }
 
@@ -219,6 +218,11 @@ namespace _Project.Scripts.Mono
             if (m_hits < m_currentLevelData.NbOfHits) return;
             m_onLevelCompletedEvent.Raise();
             StartNextLevel();
+        }
+
+        public void AddWrapHit()
+        {
+            m_gameData.NumberOfWrapHit++;
         }
 
         private void OnDestroy()

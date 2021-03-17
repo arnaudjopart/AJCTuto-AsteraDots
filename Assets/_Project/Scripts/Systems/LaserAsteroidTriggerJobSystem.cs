@@ -84,6 +84,7 @@ public class LaserAsteroidTriggerJobSystem : JobComponentSystem
                     
                     var a =m_destroyables[triggerEvent.EntityB];
                     a.m_mustBeDestroyed = true;
+                    a.m_hasCollidedWithObject = true;
                     m_destroyables[triggerEvent.EntityB] = a;
                 }
             }
@@ -107,6 +108,7 @@ public class LaserAsteroidTriggerJobSystem : JobComponentSystem
                     
                     var a =m_destroyables[triggerEvent.EntityA];
                     a.m_mustBeDestroyed = true;
+                    a.m_hasCollidedWithObject = true;
                     m_destroyables[triggerEvent.EntityA] = a;
                 }
                 

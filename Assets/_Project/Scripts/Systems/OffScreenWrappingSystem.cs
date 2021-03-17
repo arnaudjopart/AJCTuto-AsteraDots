@@ -33,6 +33,7 @@ public class OffScreenWrappingSystem : SystemBase
             {
                 if (_offScreenWrapperComponent.m_isOffScreenLeft)
                 {
+                    _offScreenWrapperComponent.m_hasWrapAtLeastOnce = true;
                     var newXPosition = SpawnOnRightSide(_translation.Value.x, 
                         _offScreenWrapperComponent.m_bounds,
                         screenDataComponent);
@@ -41,6 +42,7 @@ public class OffScreenWrappingSystem : SystemBase
                 }
                 else if (_offScreenWrapperComponent.m_isOffScreenRight)
                 {
+                    _offScreenWrapperComponent.m_hasWrapAtLeastOnce = true;
                     var newXPosition = SpawnOnLeftSide(_translation.Value.x, 
                         _offScreenWrapperComponent.m_bounds,
                         screenDataComponent);
@@ -49,6 +51,7 @@ public class OffScreenWrappingSystem : SystemBase
                 }
                 else if (_offScreenWrapperComponent.m_isOffScreenUp)
                 {
+                    _offScreenWrapperComponent.m_hasWrapAtLeastOnce = true;
                     var newYPosition = SpawnOnBottomSide(_translation.Value.y, 
                         _offScreenWrapperComponent.m_bounds,
                         screenDataComponent);
@@ -57,6 +60,7 @@ public class OffScreenWrappingSystem : SystemBase
                 }
                 else if (_offScreenWrapperComponent.m_isOffScreenDown)
                 {
+                    _offScreenWrapperComponent.m_hasWrapAtLeastOnce = true;
                     var newYPosition = SpawnOnTopSide(_translation.Value.y, 
                         _offScreenWrapperComponent.m_bounds,
                         screenDataComponent);

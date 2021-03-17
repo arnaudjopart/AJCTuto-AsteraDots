@@ -6,5 +6,6 @@ namespace _Project.Scripts.Components
     public struct DestroyableComponentData : IComponentData
     {
         public bool m_mustBeDestroyed;
+        public bool m_hasCollidedWithObject;
     }
 }

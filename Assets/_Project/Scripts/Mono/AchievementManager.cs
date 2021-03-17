@@ -1,4 +1,7 @@
+using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using _Project.Scripts.ScriptableObjects.Achievements;
 using UnityEngine;
 
@@ -9,27 +12,62 @@ namespace _Project.Scripts.Mono
         public UIAchievementDisplay m_achievementDisplay;
         private Queue<Achievement> m_queue;
         public AchievementCollection m_achievementCollection;
+        public List<Achievement> m_achievementsToUnlockList = new List<Achievement>();
         public BootStrap m_bootStrap;
+        
+        public AchievementGuids m_achievementsUnlockGuids;
 
         private void Awake()
         {
             m_queue = new Queue<Achievement>();
             m_achievementDisplay = FindObjectOfType<UIAchievementDisplay>();
+            m_achievementsToUnlockList = m_achievementCollection.m_achievements.ToList();
+        }
+
+        private void Start()
+        {
+            var sortingSystem = new AchievementSortingSystemFromPlayerPrefs();
+            var json = DataSaveLoadUtils.LoadAchievementData();
+
+            m_achievementsUnlockGuids = !string.IsNullOrEmpty(json) ? JsonUtility.FromJson<AchievementGuids>(json) : new AchievementGuids();
+
+            sortingSystem.m_data = m_achievementsUnlockGuids;
+            sortingSystem.Sort(ref m_achievementsToUnlockList );
+            
         }
 
         public void Update()
         {
-            GameData gameData = m_bootStrap.m_gameData;
-            
-            foreach (var achievement in m_achievementCollection.m_achievements)
+            if (Input.GetKeyDown(KeyCode.Delete))
             {
-                if (achievement.m_isUnlocked) continue;
-                var isUnlockThisFrame = achievement.IsAchievementUnlocked(gameData);
-                achievement.m_isUnlocked = isUnlockThisFrame;
-                if(isUnlockThisFrame) m_queue.Enqueue(achievement);
+                DeleteAchievementProgress();
             }
+            for (var i = m_achievementsToUnlockList.Count - 1; i >= 0; i--)
+            {
+                var achievement = m_achievementsToUnlockList[i];
+                
+                var isUnlockThisFrame = achievement.IsAchievementUnlocked(m_bootStrap.m_gameData);
 
+                if (!isUnlockThisFrame) continue;
+                
+                m_achievementsUnlockGuids.m_achievementGuids.Add(achievement.m_guid);
+                m_queue.Enqueue(achievement);
+                m_achievementsToUnlockList.RemoveAt(i);
+                SaveAchievementProgress();
+            }
+            
             HandleAchievementQueue();
+        }
+
+        private void DeleteAchievementProgress()
+        {
+            DataSaveLoadUtils.SaveAchievementData("");
+        }
+
+        private void SaveAchievementProgress()
+        {
+            var json = JsonUtility.ToJson(m_achievementsUnlockGuids);
+            DataSaveLoadUtils.SaveAchievementData(json);
         }
 
         private void HandleAchievementQueue()
@@ -38,7 +76,77 @@ namespace _Project.Scripts.Mono
             if (m_queue.Count == 0) return;
             var currentAchievement = m_queue.Dequeue();
             m_achievementDisplay.DisplayAchievementAlert(currentAchievement);
+            
         }
         
+    }
+
+    internal abstract class AchievementSortingSystemBase
+    {
+        public AchievementGuids m_data;
+        public abstract void Sort(ref List<Achievement> _achievements);
+        
+    }
+
+    internal class AchievementSortingSystemFromPlayerPrefs : AchievementSortingSystemBase
+    {
+        
+
+        public override void Sort(ref List<Achievement> _achievements)
+        {
+            
+            
+            for(var i = _achievements.Count-1;i>=0;i--)
+            {
+                foreach (var guid in m_data.m_achievementGuids)
+                {
+                    if (_achievements[i].m_guid != guid) continue;
+                    Debug.Log(_achievements[i].m_name + " is already unlocked");
+                    _achievements.RemoveAt(i);
+                    break;
+                }
+            }
+        }
+    }
+
+    public class DataSaveLoadUtils
+    {
+        private const string ACHIEVEMENT_KEY = "achievements";
+        private const string BEST_SCORE_KEY = "bestScore";
+
+        public static string LoadAchievementData()
+        {
+            var path = Application.persistentDataPath + ACHIEVEMENT_KEY+".txt";
+            var data = File.ReadAllText(path);
+
+            return data;
+        }
+        
+        public static void SaveAchievementData(string _data)
+        {
+            var path = Application.persistentDataPath + ACHIEVEMENT_KEY+".txt";
+            File.WriteAllText(path, _data);
+            //PlayerPrefs.SetString(ACHIEVEMENT_KEY,_data);
+        }
+        
+        public static int LoadBestScore()
+        {
+            return PlayerPrefs.GetInt(BEST_SCORE_KEY);
+        }
+        
+        public static void SaveBestScore(int _data)
+        {
+            PlayerPrefs.SetInt(BEST_SCORE_KEY,_data);
+        }
+    }
+
+    [System.Serializable]
+    public class AchievementGuids
+    {
+        public AchievementGuids()
+        {
+            m_achievementGuids = new List<string>();
+        }
+        public List<string> m_achievementGuids;
     }
 }

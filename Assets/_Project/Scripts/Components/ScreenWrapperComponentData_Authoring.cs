@@ -25,5 +25,7 @@ namespace _Project.Scripts.Components
         public bool m_isOffScreenRight;
         public bool m_isOffScreenDown;
         public bool m_isOffScreenUp;
+
+        public bool m_hasWrapAtLeastOnce;
     }
 }
