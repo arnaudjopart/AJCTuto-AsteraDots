@@ -11,23 +11,23 @@ namespace _Project.Scripts.Systems
         protected override void OnUpdate()
         {
             Entities.ForEach((
-                ref MovementCommandsComponentData _movementInfoComponent,
+                ref MovementCommandsComponentData _movementCommandsComponentData,
                 ref PhysicsVelocity _velocity,
-                in MovementParametersComponentData _moveComponentData,  
+                in MovementParametersComponentData _movementParametersComponentData,  
                 in PhysicsMass _physicsMass) =>
             {
                 PhysicsComponentExtensions.ApplyLinearImpulse(
                     ref _velocity, 
                     _physicsMass, 
-                    _movementInfoComponent.m_currentDirectionOfMove * 
-                    _movementInfoComponent.m_currentlinearCommand * 
-                    _moveComponentData.m_linearVelocity
+                    _movementCommandsComponentData.m_currentDirectionOfMove * 
+                    _movementCommandsComponentData.m_currentlinearCommand * 
+                    _movementParametersComponentData.m_linearVelocity
                 );
             
-                if (math.length(_velocity.Linear) > _moveComponentData.m_maxLinearVelocity) 
-                    _velocity.Linear = math.normalize(_velocity.Linear) * _moveComponentData.m_maxLinearVelocity;
+                if (math.length(_velocity.Linear) > _movementParametersComponentData.m_maxLinearVelocity) 
+                    _velocity.Linear = math.normalize(_velocity.Linear) * _movementParametersComponentData.m_maxLinearVelocity;
             
-            }).Schedule();
+            }).ScheduleParallel();
 
         }
     }
