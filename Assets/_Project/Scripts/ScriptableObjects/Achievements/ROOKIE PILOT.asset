@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_name: ROOKIE PILOT
   m_description: Score Above 10,000
-  m_rewards: []
+  m_rewards:
+  - {fileID: 11400000, guid: b41ad67675fd64b7b99b9a47d034fe4a, type: 2}
   m_conditions:
   - {fileID: 11400000, guid: f0d2369b555d49f4fbb88ff96c9533ea, type: 2}
-  m_override: 0
   m_guid: e37f9df37333c4d4794e85bb2d212882

@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using _Project.Scripts.ScriptableObjects.Achievements;
 using UnityEngine;
+using UnityEngine.Analytics;
 
 namespace _Project.Scripts.Mono
 {
@@ -49,6 +50,11 @@ namespace _Project.Scripts.Mono
                 var isUnlockThisFrame = achievement.IsAchievementUnlocked(m_bootStrap.m_gameData);
 
                 if (!isUnlockThisFrame) continue;
+
+                AnalyticsEvent.AchievementUnlocked(achievement.m_guid, new Dictionary<string, object>()
+                {
+                    {"time", DateTime.Now}
+                });
                 
                 m_achievementsUnlockGuids.m_achievementGuids.Add(achievement.m_guid);
                 m_queue.Enqueue(achievement);
@@ -145,7 +151,7 @@ namespace _Project.Scripts.Mono
         
         public static string GetGameData()
         {
-            var path = Application.persistentDataPath +"/"+ GAME_DATA+".txt";
+             var path = Application.persistentDataPath +"/"+ GAME_DATA+".txt";
             return File.Exists(path) ? File.ReadAllText(path) : "";
         }
     }

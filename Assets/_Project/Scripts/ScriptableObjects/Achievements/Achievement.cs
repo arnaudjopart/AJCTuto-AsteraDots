@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using _Project.Scripts.ScriptableObjects.Reward;
 using UnityEngine;
 using UnityEngine.SocialPlatforms.Impl;
@@ -13,20 +14,12 @@ namespace _Project.Scripts.ScriptableObjects.Achievements
         public RewardScriptableObject[] m_rewards;
         public AchievementCondition[] m_conditions;
 
-        public bool m_override;
-        //[HideInInspector]
+        [HideInInspector]
         public string m_guid;
 
         public bool IsAchievementUnlocked(GameData _gameData)
         {
-            if (m_override) return true;
-            
-            foreach (var condition in m_conditions)
-            {
-                if (!condition.IsVerified(_gameData)) return false;
-            }
-
-            return true;
+            return m_conditions.All(condition => condition.IsVerified(_gameData));
         }
 
         private void OnValidate()

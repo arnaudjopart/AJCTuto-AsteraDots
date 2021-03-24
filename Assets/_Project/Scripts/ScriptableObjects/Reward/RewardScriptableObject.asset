@@ -9,8 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7491757a50464876b54b41b007df2643, type: 3}
-  m_Name: Level_02
+  m_Script: {fileID: 11500000, guid: dbba48a3a00849c68a0031a15f699839, type: 3}
+  m_Name: RewardScriptableObject
   m_EditorClassIdentifier: 
-  m_nbOfAsteroids: 3
-  m_nbOfChildren: 50
+  m_material: {fileID: 2100000, guid: 622a665eaa95744be87160e8922bdebf, type: 2}

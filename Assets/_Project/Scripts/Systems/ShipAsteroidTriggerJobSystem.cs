@@ -61,7 +61,7 @@ public class ShipAsteroidTriggerJobSystem : JobComponentSystem
         
         public void Execute(TriggerEvent triggerEvent)
         {
-            var entityAIsAShip = m_ships.HasComponent(triggerEvent.EntityA);
+            /*var entityAIsAShip = m_ships.HasComponent(triggerEvent.EntityA);
             var entityBIsAShip = m_ships.HasComponent(triggerEvent.EntityB);
             
             var entityAIsAnAsteroid = m_asteroids.HasComponent(triggerEvent.EntityA);
@@ -91,7 +91,7 @@ public class ShipAsteroidTriggerJobSystem : JobComponentSystem
                 {
                     m_mustBeDestroyed = true
                 });
-            }
+            }*/
         }
     }
 }

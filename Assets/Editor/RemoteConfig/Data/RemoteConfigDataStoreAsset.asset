@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 469c24fdb3bd6431b92cc1465bd9166b, type: 3}
+  m_Name: RemoteConfigDataStoreAsset
+  m_EditorClassIdentifier: 
+  _rsKeyList: "[\n  {\n    \"metadata\": {\n      \"entityId\": \"f73c5d30-2610-401a-b268-2d88795327fb\"\n   
+    },\n    \"rs\": {\n      \"key\": \"levelConfig\",\n      \"value\": {\n       
+    \"m_nbOfAsteroids\": 1,\n        \"m_nbOfChildren\": 1\n      },\n      \"type\":
+    \"json\"\n    }\n  }\n]"
+  _rsLastCachedKeyList: '[]'
+  _environments: "[\n  {\n    \"projectId\": \"98a6ddde-e335-4052-bc1f-4528161f3240\",\n   
+    \"name\": \"Testing\",\n    \"id\": \"d5558a49-7760-4c64-a9ba-f773d2582ad9\",\n   
+    \"createdAt\": \"2021-03-24T16:19:14Z\",\n    \"updatedAt\": \"2021-03-24T16:19:14Z\",\n   
+    \"isDefault\": true\n  }\n]"
+  _rulesList: '[]'
+  _lastCachedRulesList: '[]'

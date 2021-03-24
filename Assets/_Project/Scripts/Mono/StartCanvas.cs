@@ -5,6 +5,7 @@ using _Project.Scripts.Mono;
 using DG.Tweening;
 using UnityEditor.Rendering;
 using UnityEngine;
+using UnityEngine.Analytics;
 using UnityEngine.UI;
 
 public class StartCanvas : MonoBehaviour
@@ -53,8 +54,14 @@ public class StartCanvas : MonoBehaviour
 
     public void StartGame()
     {
+        ReportStartGame();
         m_startEvent.Raise();
         m_loadSceneEvent.Raise(m_sceneToLoad2);
+    }
+
+    private void ReportStartGame()
+    {
+        AnalyticsEvent.GameStart();
     }
 
 }

@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_name: First dust
   m_description: Shot Your First Asteroid
-  m_rewards: []
+  m_rewards:
+  - {fileID: 11400000, guid: 403d72669887444b6bf444e1419be037, type: 2}
   m_conditions:
   - {fileID: 11400000, guid: 64d6c38bd86b40d47b1cc9da043d64bf, type: 2}
-  m_override: 0
   m_guid: 451b37e2b31f08544b9842cbc00786fb

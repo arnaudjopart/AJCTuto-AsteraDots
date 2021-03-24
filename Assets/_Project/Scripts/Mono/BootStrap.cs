@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using _Project.Scripts.Components;
 using _Project.Scripts.ScriptableObjects;
 using _Project.Scripts.ScriptableObjects.Achievements;
@@ -7,6 +8,7 @@ using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
 using UnityEngine;
+using UnityEngine.Analytics;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
@@ -109,6 +111,14 @@ namespace _Project.Scripts.Mono
                 });
 
                 Time.timeScale = pause ? 0 : 1;
+                if (pause)
+                {
+                    SceneManager.LoadSceneAsync("00e_PauseMenu",LoadSceneMode.Additive);
+                }
+                else
+                {
+                    SceneManager.UnloadSceneAsync("00e_PauseMenu");
+                }
             }
 
             if (m_currentLevelData == null) return;
@@ -173,6 +183,13 @@ namespace _Project.Scripts.Mono
 
         private void GameOver()
         {
+            AnalyticsEvent.GameOver(null, new Dictionary<string, object>()
+            {       
+                {"time", DateTime.Now},
+                {"score", m_gameData.CurrentScore},
+                {"level", m_currentLevelIndex},
+                {"gotHighScore",m_gameData.CurrentScore>m_gameData.SavedHighScore}
+            });
             SceneManager.LoadScene(0);
         }
 

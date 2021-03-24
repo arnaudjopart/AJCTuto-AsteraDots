@@ -17,5 +17,4 @@ MonoBehaviour:
   m_rewards: []
   m_conditions:
   - {fileID: 11400000, guid: f66897da89d2c82488eaf393e85e38e0, type: 2}
-  m_override: 0
   m_guid: 24ab176f689d0aa4fb27401763dcb38c

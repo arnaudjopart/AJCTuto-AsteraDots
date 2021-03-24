@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_name: LUCKY SHOT
   m_description: Bullet Wrapped Screen and Hit an Asteroid
-  m_rewards: []
+  m_rewards:
+  - {fileID: 11400000, guid: 6a49730c46863415582e7b6f5c57eef4, type: 2}
   m_conditions:
   - {fileID: 11400000, guid: f013a7fead74bb04e8aba70f5ee1bdd5, type: 2}
-  m_override: 0
   m_guid: 561033edba89a5e4e8d5bdaa243a6d16
