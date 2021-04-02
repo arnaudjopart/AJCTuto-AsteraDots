@@ -1,3 +1,4 @@
+
 using Unity.Entities;
 
 namespace _Project.Scripts.Components
@@ -7,5 +8,7 @@ namespace _Project.Scripts.Components
         public bool m_inputLeft;
         public bool m_inputRight;
         public bool m_inputForward;
+        public bool m_inputShoot;
     }
+    
 }

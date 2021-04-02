@@ -13,6 +13,7 @@ namespace _Project.Scripts.Systems
                 _input.m_inputLeft = Input.GetKey(KeyCode.Q);
                 _input.m_inputRight = Input.GetKey(KeyCode.D);
                 _input.m_inputForward = Input.GetKey(KeyCode.Z);
+                _input.m_inputShoot = Input.GetMouseButton(0);
                 
             }).Run();
         }
