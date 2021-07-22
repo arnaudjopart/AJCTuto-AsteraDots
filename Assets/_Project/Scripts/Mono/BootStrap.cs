@@ -25,7 +25,7 @@ namespace _Project.Scripts.Mono
         public static BootStrap m_instance;
         
         private JobHandle m_jobHandle;
-        private ValidateSpawnPositionJob m_job;
+        private ValidateSpawnPositionJob m_validateSpawnPositionJob;
 
         private void Awake()
         {
@@ -43,17 +43,11 @@ namespace _Project.Scripts.Mono
         void Start()
         {
             m_jobHandle = new JobHandle();
-            m_job = new ValidateSpawnPositionJob();
+            m_validateSpawnPositionJob = new ValidateSpawnPositionJob();
            
             m_entityManager.CreateEntity(typeof(InputComponentData));
             
-            var ship = m_entityManager.GetComponentData<ShipReferenceInBoostrapComponentData>(m_playerLibrary);
-
-            var player = m_entityManager.Instantiate(ship.m_ship);
-            m_entityManager.SetComponentData(player, new Translation
-            {
-                Value = float3.zero
-            });
+            SpawnShipAt(float3.zero);
         }
 
         private void SpawnAsteroid()
@@ -104,6 +98,9 @@ namespace _Project.Scripts.Mono
             var screenInfoComponent = m_entityManager.GetComponentData<ScreenInfoComponentData>(screenInfoEntity);
             var width = screenInfoComponent.m_width;
             var height = screenInfoComponent.m_height;
+
+            var translationComponentsOfAllAsteroids = new NativeArray<Translation>();
+            var isSpawnPositionValid = new NativeArray<bool>();
             
             var possiblePosition = new Vector3(Random.Range(-width*.5f, width*.5f), Random.Range(-height*.5f, height*.5f), 0);
             while (stillLookingForPosition)
@@ -112,15 +109,15 @@ namespace _Project.Scripts.Mono
                     m_entityManager.CreateEntityQuery(typeof(AsteroidTagComponent),
                         ComponentType.ReadOnly<Translation>());
             
-                var translationComponentsOfAllAsteroids = asteroidQuery.ToComponentDataArray<Translation>(Allocator.TempJob);
-                var isSpawnPositionValid = new NativeArray<bool>(1, Allocator.TempJob);
+                translationComponentsOfAllAsteroids = asteroidQuery.ToComponentDataArray<Translation>(Allocator.TempJob);
+                isSpawnPositionValid = new NativeArray<bool>(1, Allocator.TempJob);
                 
-                m_job.m_translations = translationComponentsOfAllAsteroids;
-                m_job.m_minSpawnDistance = 5;
-                m_job.m_possibleSpawnPosition = possiblePosition;
-                m_job.m_result = isSpawnPositionValid;
+                m_validateSpawnPositionJob.m_translations = translationComponentsOfAllAsteroids;
+                m_validateSpawnPositionJob.m_minSpawnDistance = 5;
+                m_validateSpawnPositionJob.m_possibleSpawnPosition = possiblePosition;
+                m_validateSpawnPositionJob.m_result = isSpawnPositionValid;
 
-                m_jobHandle = m_job.Schedule();
+                m_jobHandle = m_validateSpawnPositionJob.Schedule();
                 m_jobHandle.Complete();
 
                 if (isSpawnPositionValid[0])
@@ -131,19 +128,23 @@ namespace _Project.Scripts.Mono
                 {
                     possiblePosition = new Vector3(Random.Range(-width*.5f, width*.5f), Random.Range(-height*.5f, height*.5f), 0);
                 }
-            
                 isSpawnPositionValid.Dispose();
                 translationComponentsOfAllAsteroids.Dispose();
+                
             }
+            
+            SpawnShipAt(possiblePosition);
+        }
 
+        private void SpawnShipAt(Vector3 _possiblePosition)
+        {
             var ship = m_entityManager.GetComponentData<ShipReferenceInBoostrapComponentData>(m_playerLibrary);
 
             var player = m_entityManager.Instantiate(ship.m_ship);
             m_entityManager.SetComponentData(player, new Translation
             {
-                Value = possiblePosition
+                Value = _possiblePosition
             });
-            
         }
 
         public struct ValidateSpawnPositionJob : IJob
