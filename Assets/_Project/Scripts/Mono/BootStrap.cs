@@ -98,7 +98,14 @@ namespace _Project.Scripts.Mono
         public void LookForPlayerSpawnPosition()
         {
             var stillLookingForPosition = true;
-            var possiblePosition = new Vector3(Random.Range(-10, 10), Random.Range(-5, 5), 0);
+            var screenInfoQuery = m_entityManager.CreateEntityQuery(typeof(ScreenInfoComponentData));
+
+            var screenInfoEntity = screenInfoQuery.GetSingletonEntity();
+            var screenInfoComponent = m_entityManager.GetComponentData<ScreenInfoComponentData>(screenInfoEntity);
+            var width = screenInfoComponent.m_width;
+            var height = screenInfoComponent.m_height;
+            
+            var possiblePosition = new Vector3(Random.Range(-width*.5f, width*.5f), Random.Range(-height*.5f, height*.5f), 0);
             while (stillLookingForPosition)
             {
                 var asteroidQuery =
@@ -122,7 +129,7 @@ namespace _Project.Scripts.Mono
                 }
                 else
                 {
-                    possiblePosition = new Vector3(Random.Range(-10, 10), Random.Range(-5, 5), 0);
+                    possiblePosition = new Vector3(Random.Range(-width*.5f, width*.5f), Random.Range(-height*.5f, height*.5f), 0);
                 }
             
                 isSpawnPositionValid.Dispose();
