@@ -21,9 +21,10 @@ namespace _Project.Scripts.Mono
 
         private float m_currentTimer;
         public float m_asteroidSpawnFrequency = 2f;
-        private JobHandle m_jobHandle;
         public Entity m_playerLibrary;
         public static BootStrap m_instance;
+        
+        private JobHandle m_jobHandle;
         private ValidateSpawnPositionJob m_job;
 
         private void Awake()
@@ -100,24 +101,22 @@ namespace _Project.Scripts.Mono
             var possiblePosition = new Vector3(Random.Range(-10, 10), Random.Range(-5, 5), 0);
             while (stillLookingForPosition)
             {
-                var query =
+                var asteroidQuery =
                     m_entityManager.CreateEntityQuery(typeof(AsteroidTagComponent),
                         ComponentType.ReadOnly<Translation>());
             
-                var length = query.ToComponentDataArray<Translation>(Allocator.TempJob);
-                var result = new NativeArray<bool>(1, Allocator.TempJob);
-            
-                print(length.Length);
-
-                m_job.m_translations = length;
+                var translationComponentsOfAllAsteroids = asteroidQuery.ToComponentDataArray<Translation>(Allocator.TempJob);
+                var isSpawnPositionValid = new NativeArray<bool>(1, Allocator.TempJob);
+                
+                m_job.m_translations = translationComponentsOfAllAsteroids;
                 m_job.m_minSpawnDistance = 5;
                 m_job.m_possibleSpawnPosition = possiblePosition;
-                m_job.m_result = result;
+                m_job.m_result = isSpawnPositionValid;
 
                 m_jobHandle = m_job.Schedule();
                 m_jobHandle.Complete();
 
-                if (result[0])
+                if (isSpawnPositionValid[0])
                 {
                     stillLookingForPosition = false;
                 }
@@ -126,8 +125,8 @@ namespace _Project.Scripts.Mono
                     possiblePosition = new Vector3(Random.Range(-10, 10), Random.Range(-5, 5), 0);
                 }
             
-                result.Dispose();
-                length.Dispose();
+                isSpawnPositionValid.Dispose();
+                translationComponentsOfAllAsteroids.Dispose();
             }
 
             var ship = m_entityManager.GetComponentData<ShipReferenceInBoostrapComponentData>(m_playerLibrary);
