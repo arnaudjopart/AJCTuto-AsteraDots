@@ -22,8 +22,9 @@ namespace _Project.Scripts.Mono
         private float m_currentTimer;
         public float m_asteroidSpawnFrequency = 2f;
         private JobHandle m_jobHandle;
-        public Entity m_playerEntity;
+        public Entity m_playerLibrary;
         public static BootStrap m_instance;
+        private ValidateSpawnPositionJob m_job;
 
         private void Awake()
         {
@@ -41,6 +42,8 @@ namespace _Project.Scripts.Mono
         void Start()
         {
             m_jobHandle = new JobHandle();
+            m_job = new ValidateSpawnPositionJob();
+           
             m_entityManager.CreateEntity(typeof(InputComponentData));
         }
 
@@ -97,16 +100,13 @@ namespace _Project.Scripts.Mono
                 var result = new NativeArray<bool>(1, Allocator.TempJob);
             
                 print(length.Length);
-            
-                var job = new ValidateSpawnPositionJob()
-                {
-                    m_translations = length,
-                    m_minSpawnDistance = 5,
-                    m_possibleSpawnPosition = possiblePosition,
-                    m_result = result
-                };
 
-                m_jobHandle = job.Schedule();
+                m_job.m_translations = length;
+                m_job.m_minSpawnDistance = 5;
+                m_job.m_possibleSpawnPosition = possiblePosition;
+                m_job.m_result = result;
+
+                m_jobHandle = m_job.Schedule();
                 m_jobHandle.Complete();
 
                 if (result[0])
@@ -122,7 +122,7 @@ namespace _Project.Scripts.Mono
                 length.Dispose();
             }
 
-            var ship = m_entityManager.GetComponentData<ShipReferenceInBoostrapComponentData>(m_playerEntity);
+            var ship = m_entityManager.GetComponentData<ShipReferenceInBoostrapComponentData>(m_playerLibrary);
 
             var player = m_entityManager.Instantiate(ship.m_ship);
             m_entityManager.SetComponentData(player, new Translation

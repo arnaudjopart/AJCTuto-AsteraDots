@@ -15,7 +15,7 @@ public class ShipLibraryComponentData_Authoring : MonoBehaviour, IConvertGameObj
         {
             m_ship = conversionSystem.GetPrimaryEntity(m_prefab)
         });
-        m_bootStrap.m_playerEntity = entity;
+        m_bootStrap.m_playerLibrary = entity;
     }
 
     public void DeclareReferencedPrefabs(List<GameObject> referencedPrefabs)
