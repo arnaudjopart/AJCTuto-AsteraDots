@@ -45,6 +45,14 @@ namespace _Project.Scripts.Mono
             m_job = new ValidateSpawnPositionJob();
            
             m_entityManager.CreateEntity(typeof(InputComponentData));
+            
+            var ship = m_entityManager.GetComponentData<ShipReferenceInBoostrapComponentData>(m_playerLibrary);
+
+            var player = m_entityManager.Instantiate(ship.m_ship);
+            m_entityManager.SetComponentData(player, new Translation
+            {
+                Value = float3.zero
+            });
         }
 
         private void SpawnAsteroid()
