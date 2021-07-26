@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using _Project.Scripts.Components;
+using _Project.Scripts.Mono;
 using Unity.Entities;
 using UnityEngine;
 
@@ -25,6 +26,7 @@ public class ShipDestructionSystem : SystemBase
                 if (_destroyable.m_mustBeDestroyed)
                 {
                     m_entityManager.DestroyEntity(_entity);
+                    BootStrap.m_instance.LookForPlayerSpawnPosition();
                 }
             }).Run();
 
