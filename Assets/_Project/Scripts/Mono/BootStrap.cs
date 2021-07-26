@@ -12,6 +12,7 @@ namespace _Project.Scripts.Mono
     {
 
         public Entity m_asteroidLibrary;
+        public Entity m_playerShipEntity;
         private EntityManager m_entityManager;
 
         public Transform[] m_asteroidsSpawnPositions;
@@ -35,6 +36,7 @@ namespace _Project.Scripts.Mono
         void Start()
         {
             m_entityManager.CreateEntity(typeof(InputComponentData));
+            SpawnShipAtPosition(Vector3.zero);
         }
 
         private void SpawnAsteroid()
@@ -74,6 +76,17 @@ namespace _Project.Scripts.Mono
                 SpawnAsteroid();
             }
 
+        }
+
+        private void SpawnShipAtPosition(Vector3 _spawnPosition)
+        {
+            var shipLibraryReference =
+                m_entityManager.GetComponentData<ShipLibraryElementComponentData>(m_playerShipEntity);
+            var playerShip = m_entityManager.Instantiate(shipLibraryReference.m_ship);
+            m_entityManager.SetComponentData(playerShip, new Translation
+            {
+                Value = _spawnPosition
+            });
         }
     }
 }
